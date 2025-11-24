@@ -1,0 +1,56 @@
+# Python
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Datos sensibles (CSV con información real)
+LISTADO-CON-FASES.csv
+seguimiento_informes.csv
+calendario.csv
+
+# Permitir archivo de ejemplo
+!ejemplo_centros.csv
+
+# Streamlit
+.streamlit/secrets.toml
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Backups
+backups/
+*.bak
+*.backup
+
+# Logs
+*.log
