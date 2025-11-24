@@ -248,11 +248,19 @@ else:
             st.caption(f"Mostrando {len(centros_filtrados)} de {len(lista_centros)} centros")
             
             with st.form("form_nuevo_seguimiento"):
-                centro_kanban = st.selectbox("Seleccionar Centro", centros_filtrados if centros_filtrados else ["No hay coincidencias"])
-                resp_kanban = st.text_input("Responsable", value="Jeremy Fernández")
-                prio_kanban = st.select_slider("Prioridad", ["Baja", "Media", "Alta"], value="Media")
+                col_nk1, col_nk2 = st.columns(2)
                 
-                if st.form_submit_button("🚀 Iniciar Informe"):
+                with col_nk1:
+                    centro_kanban = st.selectbox("Seleccionar Centro", centros_filtrados if centros_filtrados else ["No hay coincidencias"])
+                    resp_kanban = st.text_input("Responsable", value="Jeremy Fernández")
+                
+                with col_nk2:
+                    prio_kanban = st.select_slider("Prioridad", ["Baja", "Media", "Alta"], value="Media")
+                    fecha_inicio_kanban = st.date_input("Fecha de Inicio", value=datetime.date.today())
+                
+                observaciones_inicial = st.text_area("Observaciones Iniciales", placeholder="Notas, objetivos, requisitos especiales...")
+                
+                if st.form_submit_button("🚀 Iniciar Informe", type="primary", use_container_width=True):
                     if centro_kanban == "No hay coincidencias":
                         st.error("Por favor selecciona un centro válido")
                     else:
@@ -261,15 +269,18 @@ else:
                             "ID": nuevo_id,
                             "Centro": centro_kanban,
                             "Estado": "Pendiente",
-                            "Fecha_Inicio": datetime.date.today(),
+                            "Fecha_Inicio": fecha_inicio_kanban,
                             "Fecha_Fin": None,
                             "Responsable": resp_kanban,
-                            "Prioridad": prio_kanban
+                            "Prioridad": prio_kanban,
+                            "Observaciones": observaciones_inicial if observaciones_inicial else ""
                         }
                         df_seguimiento = pd.concat([df_seguimiento, pd.DataFrame([nuevo_item])], ignore_index=True)
                         guardar_seguimiento(df_seguimiento)
                         st.success(f"Informe para {centro_kanban} agregado al tablero.")
                         st.rerun()
+
+        st.divider()
 
         # Columnas del Kanban
         col_pend, col_proc, col_fin = st.columns(3)
@@ -284,50 +295,169 @@ else:
         df_proc = df_seguimiento[df_seguimiento['Estado'] == 'En Proceso']
         df_fin = df_seguimiento[df_seguimiento['Estado'] == 'Terminado']
         
-        # Función para renderizar tarjeta
-        def render_card(row, col_obj, current_status):
+        # Función para renderizar tarjeta mejorada
+        def render_card_mejorada(row, col_obj, current_status):
             with col_obj:
+                # Color según estado
+                color_borde = {'Pendiente': '#dc3545', 'En Proceso': '#ffc107', 'Terminado': '#28a745'}[current_status]
+                
+                # Obtener datos del centro si existe
+                centro_info = ""
+                if not df_centros.empty and 'NOMBRE' in df_centros.columns:
+                    centro_data = df_centros[df_centros['NOMBRE'] == row['Centro']]
+                    if not centro_data.empty:
+                        centro_data = centro_data.iloc[0]
+                        provincia = centro_data.get('PROVINCIA', 'N/A')
+                        canton = centro_data.get('CANTON', 'N/A')
+                        codigo = centro_data.get('CODIGO', 'N/A')
+                        categoria = centro_data.get('CATALOGO', 'N/A')
+                        centro_info = f"📍 {provincia} - {canton} | 🏷️ Cat: {categoria} | 🔢 Código: {codigo}"
+                
                 with st.container():
+                    # Tarjeta principal
                     st.markdown(f"""
-                    <div class="kanban-card" style="border-left-color: {'#dc3545' if current_status=='Pendiente' else '#ffc107' if current_status=='En Proceso' else '#28a745'};">
+                    <div class="kanban-card" style="border-left-color: {color_borde};">
                         <div class="kanban-header">{row['Centro']}</div>
                         <div class="kanban-meta">👤 {row['Responsable']} | 📅 Inicio: {row['Fecha_Inicio']}</div>
                         <div class="kanban-meta">⚡ Prioridad: {row['Prioridad']}</div>
+                        {f'<div class="kanban-meta" style="margin-top: 5px;">{centro_info}</div>' if centro_info else ''}
                     </div>
                     """, unsafe_allow_html=True)
                     
-                    # Controles de movimiento
-                    c1, c2 = st.columns(2)
-                    if current_status == 'Pendiente':
-                        if c2.button("➡️ Iniciar", key=f"start_{row['ID']}"):
-                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
-                            guardar_seguimiento(df_seguimiento)
-                            st.rerun()
-                    elif current_status == 'En Proceso':
-                        if c1.button("⬅️ Pausar", key=f"pause_{row['ID']}"):
-                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pendiente'
-                            guardar_seguimiento(df_seguimiento)
-                            st.rerun()
-                        if c2.button("✅ Terminar", key=f"finish_{row['ID']}"):
-                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Terminado'
-                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Fecha_Fin'] = datetime.date.today()
-                            guardar_seguimiento(df_seguimiento)
-                            st.rerun()
-                    elif current_status == 'Terminado':
-                        if c1.button("↩️ Reabrir", key=f"reopen_{row['ID']}"):
-                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
-                            guardar_seguimiento(df_seguimiento)
-                            st.rerun()
+                    # Botones de acción principales
+                    col_btn1, col_btn2 = st.columns(2)
+                    
+                    with col_btn1:
+                        if current_status == 'Pendiente':
+                            if st.button("➡️ Iniciar", key=f"start_{row['ID']}", use_container_width=True):
+                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
+                                guardar_seguimiento(df_seguimiento)
+                                st.rerun()
+                        elif current_status == 'En Proceso':
+                            if st.button("⬅️ Pausar", key=f"pause_{row['ID']}", use_container_width=True):
+                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pendiente'
+                                guardar_seguimiento(df_seguimiento)
+                                st.rerun()
+                        elif current_status == 'Terminado':
+                            if st.button("↩️ Reabrir", key=f"reopen_{row['ID']}", use_container_width=True):
+                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
+                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Fecha_Fin'] = None
+                                guardar_seguimiento(df_seguimiento)
+                                st.rerun()
+                    
+                    with col_btn2:
+                        if current_status == 'En Proceso':
+                            if st.button("✅ Terminar", key=f"finish_{row['ID']}", use_container_width=True):
+                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Terminado'
+                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Fecha_Fin'] = datetime.date.today()
+                                guardar_seguimiento(df_seguimiento)
+                                st.rerun()
+                    
+                    # Expander para detalles y edición
+                    with st.expander("📝 Ver Detalles y Editar", expanded=False):
+                        # Mostrar información del centro
+                        if centro_info:
+                            st.markdown("**📋 Información del Centro:**")
+                            if not df_centros.empty:
+                                centro_data = df_centros[df_centros['NOMBRE'] == row['Centro']]
+                                if not centro_data.empty:
+                                    centro_data = centro_data.iloc[0]
+                                    col_info1, col_info2 = st.columns(2)
+                                    with col_info1:
+                                        st.caption(f"**Provincia:** {centro_data.get('PROVINCIA', 'N/A')}")
+                                        st.caption(f"**Cantón:** {centro_data.get('CANTON', 'N/A')}")
+                                    with col_info2:
+                                        st.caption(f"**Código:** {centro_data.get('CODIGO', 'N/A')}")
+                                        st.caption(f"**Categoría:** {centro_data.get('CATALOGO', 'N/A')}")
+                            st.divider()
+                        
+                        # Formulario de edición
+                        with st.form(f"form_edit_{row['ID']}"):
+                            st.markdown("**✏️ Editar Datos del Informe:**")
+                            
+                            col_edit1, col_edit2 = st.columns(2)
+                            
+                            with col_edit1:
+                                nuevo_responsable = st.text_input(
+                                    "Responsable", 
+                                    value=row.get('Responsable', ''),
+                                    key=f"resp_edit_{row['ID']}"
+                                )
+                                nueva_prioridad = st.select_slider(
+                                    "Prioridad",
+                                    ["Baja", "Media", "Alta"],
+                                    value=row.get('Prioridad', 'Media'),
+                                    key=f"prio_edit_{row['ID']}"
+                                )
+                            
+                            with col_edit2:
+                                nueva_fecha_inicio = st.date_input(
+                                    "Fecha de Inicio",
+                                    value=pd.to_datetime(row['Fecha_Inicio']).date() if pd.notna(row['Fecha_Inicio']) else datetime.date.today(),
+                                    key=f"fecha_edit_{row['ID']}"
+                                )
+                                
+                                if current_status == 'Terminado' and pd.notna(row.get('Fecha_Fin')):
+                                    nueva_fecha_fin = st.date_input(
+                                        "Fecha de Finalización",
+                                        value=pd.to_datetime(row['Fecha_Fin']).date(),
+                                        key=f"fecha_fin_edit_{row['ID']}"
+                                    )
+                                else:
+                                    nueva_fecha_fin = None
+                            
+                            # Observaciones
+                            st.markdown("**💬 Observaciones:**")
+                            nuevas_observaciones = st.text_area(
+                                "Notas, avances, pendientes, hallazgos...",
+                                value=row.get('Observaciones', ''),
+                                height=100,
+                                key=f"obs_edit_{row['ID']}",
+                                placeholder="Agrega observaciones sobre el progreso del informe..."
+                            )
+                            
+                            col_save1, col_save2 = st.columns(2)
+                            
+                            with col_save1:
+                                if st.form_submit_button("💾 Guardar Cambios", type="primary", use_container_width=True):
+                                    # Actualizar datos
+                                    idx = df_seguimiento[df_seguimiento['ID'] == row['ID']].index[0]
+                                    df_seguimiento.loc[idx, 'Responsable'] = nuevo_responsable
+                                    df_seguimiento.loc[idx, 'Prioridad'] = nueva_prioridad
+                                    df_seguimiento.loc[idx, 'Fecha_Inicio'] = nueva_fecha_inicio
+                                    df_seguimiento.loc[idx, 'Observaciones'] = nuevas_observaciones
+                                    
+                                    if nueva_fecha_fin:
+                                        df_seguimiento.loc[idx, 'Fecha_Fin'] = nueva_fecha_fin
+                                    
+                                    guardar_seguimiento(df_seguimiento)
+                                    st.success("✅ Cambios guardados")
+                                    time.sleep(1)
+                                    st.rerun()
+                            
+                            with col_save2:
+                                if st.form_submit_button("🗑️ Eliminar Informe", use_container_width=True):
+                                    df_seguimiento_new = df_seguimiento[df_seguimiento['ID'] != row['ID']]
+                                    guardar_seguimiento(df_seguimiento_new)
+                                    st.success("🗑️ Informe eliminado")
+                                    time.sleep(1)
+                                    st.rerun()
+                        
+                        # Mostrar observaciones actuales si existen
+                        if pd.notna(row.get('Observaciones')) and row.get('Observaciones'):
+                            st.divider()
+                            st.markdown("**📌 Observaciones Actuales:**")
+                            st.info(row['Observaciones'])
 
         # Renderizar columnas
         for _, row in df_pend.iterrows():
-            render_card(row, col_pend, 'Pendiente')
+            render_card_mejorada(row, col_pend, 'Pendiente')
             
         for _, row in df_proc.iterrows():
-            render_card(row, col_proc, 'En Proceso')
+            render_card_mejorada(row, col_proc, 'En Proceso')
             
         for _, row in df_fin.iterrows():
-            render_card(row, col_fin, 'Terminado')
+            render_card_mejorada(row, col_fin, 'Terminado')
 
     # --- CALENDARIO: PLANIFICACIÓN DE INFORMES (MÓDULO MEJORADO) ---
     elif menu == "Calendario":
