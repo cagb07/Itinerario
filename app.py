@@ -135,10 +135,37 @@ def cargar_seguimiento():
     """Carga el estado de los informes (Kanban)."""
     if os.path.exists(ARCHIVO_SEGUIMIENTO):
         return pd.read_csv(ARCHIVO_SEGUIMIENTO)
-    return pd.DataFrame(columns=["ID", "Centro", "Estado", "Fecha_Inicio", "Fecha_Fin", "Responsable", "Prioridad"])
+    return pd.DataFrame(columns=["ID", "Centro", "Estado", "Fecha_Inicio", "Fecha_Fin", "Responsable", "Prioridad", "Observaciones"])
 
 def guardar_seguimiento(df):
+    """Guarda el estado de los informes."""
     df.to_csv(ARCHIVO_SEGUIMIENTO, index=False)
+
+def cargar_calendario():
+    """Carga el calendario de citas. Maneja errores de formato."""
+    if os.path.exists(ARCHIVO_CALENDARIO):
+        try:
+            return pd.read_csv(ARCHIVO_CALENDARIO)
+        except pd.errors.ParserError as e:
+            # Si el archivo está corrupto, lo respaldamos y creamos uno nuevo
+            import shutil
+            backup_name = f"calendario_backup_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+            shutil.copy(ARCHIVO_CALENDARIO, backup_name)
+            os.remove(ARCHIVO_CALENDARIO)
+            st.warning(f"⚠️ El archivo calendario.csv estaba corrupto. Se creó un respaldo en {backup_name}")
+            return pd.DataFrame()
+        except Exception as e:
+            st.error(f"Error al cargar calendario: {e}")
+            return pd.DataFrame()
+    return pd.DataFrame()
+
+def guardar_registro(ruta, datos):
+    """Guarda un registro en un archivo CSV."""
+    df_new = pd.DataFrame([datos])
+    if not os.path.exists(ruta):
+        df_new.to_csv(ruta, index=False)
+    else:
+        df_new.to_csv(ruta, mode='a', header=False, index=False)
 
 # --- CARGA DE DATOS ---
 df_centros = cargar_datos_maestros()
