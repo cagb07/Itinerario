@@ -134,7 +134,17 @@ def cargar_datos_maestros():
 def cargar_seguimiento():
     """Carga el estado de los informes (Kanban)."""
     if os.path.exists(ARCHIVO_SEGUIMIENTO):
-        return pd.read_csv(ARCHIVO_SEGUIMIENTO)
+        df = pd.read_csv(ARCHIVO_SEGUIMIENTO)
+        
+        # Verificar y corregir IDs duplicados
+        if 'ID' in df.columns and df['ID'].duplicated().any():
+            st.warning("⚠️ Se detectaron IDs duplicados en el seguimiento. Corrigiendo...")
+            # Reasignar IDs únicos
+            df['ID'] = range(1, len(df) + 1)
+            # Guardar archivo corregido
+            df.to_csv(ARCHIVO_SEGUIMIENTO, index=False)
+        
+        return df
     return pd.DataFrame(columns=["ID", "Centro", "Estado", "Fecha_Inicio", "Fecha_Fin", "Responsable", "Prioridad", "Observaciones"])
 
 def guardar_seguimiento(df):
@@ -651,8 +661,9 @@ else:
                                         st.caption(f"**Categoría:** {centro_data.get('CATALOGO', 'N/A')}")
                             st.divider()
                         
-                        # Formulario de edición
-                        with st.form(f"form_edit_{row['ID']}"):
+                        # Formulario de edición con key único
+                        unique_key = f"form_edit_{row['ID']}_{current_status}_{hash(str(row))}"
+                        with st.form(unique_key):
                             st.markdown("**✏️ Editar Datos del Informe:**")
                             
                             col_edit1, col_edit2 = st.columns(2)
