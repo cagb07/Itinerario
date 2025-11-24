@@ -235,54 +235,285 @@ else:
         st.title("📋 Tablero Kanban de Seguimiento")
         st.markdown("Visualiza y gestiona el estado de los informes en tiempo real.")
         
-        # Botón para iniciar nuevo informe (Agregar al Kanban)
-        with st.expander("➕ Iniciar Nuevo Informe (Agregar al Tablero)", expanded=False):
-            # Campo de búsqueda fuera del formulario
-            lista_centros = sorted(df_centros['NOMBRE'].unique().tolist()) if 'NOMBRE' in df_centros.columns else []
-            busqueda = st.text_input("🔍 Buscar Centro Educativo", placeholder="Escribe para filtrar...", key="buscar_centro")
+        # Tabs para Kanban y Reportes
+        tab_kanban, tab_reportes = st.tabs(["📊 Tablero Kanban", "📈 Reportes de Estado"])
+        
+        with tab_reportes:
+            st.subheader("📈 Reportes de Estado con Observaciones")
+            st.markdown("Genera reportes detallados del estado de los informes con todas las observaciones.")
             
-            # Filtrar centros según la búsqueda
-            if busqueda:
-                centros_filtrados = [c for c in lista_centros if busqueda.upper() in c.upper()]
-            else:
-                centros_filtrados = lista_centros
+            # Filtros para reportes
+            col_r1, col_r2, col_r3, col_r4 = st.columns(4)
             
-            st.caption(f"Mostrando {len(centros_filtrados)} de {len(lista_centros)} centros")
+            with col_r1:
+                estados_filtro = st.multiselect(
+                    "Estados",
+                    ["Pendiente", "En Proceso", "Pausado", "Terminado"],
+                    default=["Pendiente", "En Proceso", "Pausado", "Terminado"],
+                    key="filtro_estados_reporte"
+                )
             
-            with st.form("form_nuevo_seguimiento"):
-                col_nk1, col_nk2 = st.columns(2)
+            with col_r2:
+                prioridades_filtro = st.multiselect(
+                    "Prioridades",
+                    ["Baja", "Media", "Alta"],
+                    default=["Baja", "Media", "Alta"],
+                    key="filtro_prioridades_reporte"
+                )
+            
+            with col_r3:
+                fecha_desde = st.date_input(
+                    "Desde",
+                    value=datetime.date.today() - datetime.timedelta(days=30),
+                    key="fecha_desde_reporte"
+                )
+            
+            with col_r4:
+                fecha_hasta = st.date_input(
+                    "Hasta",
+                    value=datetime.date.today(),
+                    key="fecha_hasta_reporte"
+                )
+            
+            # Aplicar filtros
+            df_reporte = df_seguimiento.copy()
+            
+            if not df_reporte.empty:
+                # Filtro por estado
+                if estados_filtro:
+                    df_reporte = df_reporte[df_reporte['Estado'].isin(estados_filtro)]
                 
-                with col_nk1:
-                    centro_kanban = st.selectbox("Seleccionar Centro", centros_filtrados if centros_filtrados else ["No hay coincidencias"])
-                    resp_kanban = st.text_input("Responsable", value="Jeremy Fernández")
+                # Filtro por prioridad
+                if prioridades_filtro:
+                    df_reporte = df_reporte[df_reporte['Prioridad'].isin(prioridades_filtro)]
                 
-                with col_nk2:
-                    prio_kanban = st.select_slider("Prioridad", ["Baja", "Media", "Alta"], value="Media")
-                    fecha_inicio_kanban = st.date_input("Fecha de Inicio", value=datetime.date.today())
+                # Filtro por fecha
+                df_reporte['Fecha_Inicio'] = pd.to_datetime(df_reporte['Fecha_Inicio'])
+                df_reporte = df_reporte[
+                    (df_reporte['Fecha_Inicio'].dt.date >= fecha_desde) &
+                    (df_reporte['Fecha_Inicio'].dt.date <= fecha_hasta)
+                ]
                 
-                observaciones_inicial = st.text_area("Observaciones Iniciales", placeholder="Notas, objetivos, requisitos especiales...")
+                st.divider()
                 
-                if st.form_submit_button("🚀 Iniciar Informe", type="primary", use_container_width=True):
-                    if centro_kanban == "No hay coincidencias":
-                        st.error("Por favor selecciona un centro válido")
+                # Resumen del reporte
+                col_sum1, col_sum2, col_sum3, col_sum4 = st.columns(4)
+                col_sum1.metric("Total Informes", len(df_reporte))
+                col_sum2.metric("Con Observaciones", len(df_reporte[df_reporte['Observaciones'].notna() & (df_reporte['Observaciones'] != '')]))
+                col_sum3.metric("Sin Observaciones", len(df_reporte[(df_reporte['Observaciones'].isna()) | (df_reporte['Observaciones'] == '')]))
+                col_sum4.metric("Prioridad Alta", len(df_reporte[df_reporte['Prioridad'] == 'Alta']))
+                
+                st.divider()
+                
+                # Opciones de visualización
+                vista_reporte = st.radio(
+                    "Vista del Reporte",
+                    ["📋 Tabla Completa", "📝 Detalle con Observaciones", "📊 Resumen por Estado"],
+                    horizontal=True
+                )
+                
+                if vista_reporte == "📋 Tabla Completa":
+                    # Tabla completa
+                    st.markdown("### Tabla Completa de Informes")
+                    
+                    # Preparar datos para mostrar
+                    df_display = df_reporte.copy()
+                    df_display['Fecha_Inicio'] = df_display['Fecha_Inicio'].dt.strftime('%Y-%m-%d')
+                    df_display['Observaciones_Preview'] = df_display['Observaciones'].apply(
+                        lambda x: (str(x)[:50] + '...') if pd.notna(x) and len(str(x)) > 50 else str(x) if pd.notna(x) else ''
+                    )
+                    
+                    columnas_mostrar = ['ID', 'Centro', 'Estado', 'Prioridad', 'Responsable', 'Fecha_Inicio', 'Observaciones_Preview']
+                    st.dataframe(
+                        df_display[columnas_mostrar],
+                        use_container_width=True,
+                        height=400
+                    )
+                
+                elif vista_reporte == "📝 Detalle con Observaciones":
+                    # Vista detallada con observaciones completas
+                    st.markdown("### Detalle de Informes con Observaciones")
+                    
+                    for idx, row in df_reporte.iterrows():
+                        with st.expander(f"📄 {row['Centro']} - {row['Estado']}", expanded=False):
+                            col_det1, col_det2 = st.columns(2)
+                            
+                            with col_det1:
+                                st.markdown(f"**ID:** {row['ID']}")
+                                st.markdown(f"**Estado:** {row['Estado']}")
+                                st.markdown(f"**Prioridad:** {row['Prioridad']}")
+                                st.markdown(f"**Responsable:** {row['Responsable']}")
+                            
+                            with col_det2:
+                                st.markdown(f"**Fecha Inicio:** {row['Fecha_Inicio'].strftime('%Y-%m-%d')}")
+                                if pd.notna(row.get('Fecha_Fin')):
+                                    st.markdown(f"**Fecha Fin:** {pd.to_datetime(row['Fecha_Fin']).strftime('%Y-%m-%d')}")
+                                
+                                # Información del centro
+                                if not df_centros.empty and 'NOMBRE' in df_centros.columns:
+                                    centro_data = df_centros[df_centros['NOMBRE'] == row['Centro']]
+                                    if not centro_data.empty:
+                                        centro_data = centro_data.iloc[0]
+                                        st.markdown(f"**Provincia:** {centro_data.get('PROVINCIA', 'N/A')}")
+                                        st.markdown(f"**Categoría:** {centro_data.get('CATALOGO', 'N/A')}")
+                            
+                            st.divider()
+                            
+                            # Observaciones
+                            if pd.notna(row.get('Observaciones')) and row.get('Observaciones'):
+                                st.markdown("**💬 Observaciones:**")
+                                st.info(row['Observaciones'])
+                            else:
+                                st.caption("_Sin observaciones registradas_")
+                
+                else:  # Resumen por Estado
+                    st.markdown("### Resumen por Estado")
+                    
+                    for estado in ["Pendiente", "En Proceso", "Pausado", "Terminado"]:
+                        df_estado = df_reporte[df_reporte['Estado'] == estado]
+                        
+                        if not df_estado.empty:
+                            icono_map = {
+                                "Pendiente": "🔴",
+                                "En Proceso": "🟡",
+                                "Pausado": "⏸️",
+                                "Terminado": "🟢"
+                            }
+                            
+                            with st.expander(f"{icono_map[estado]} {estado} ({len(df_estado)} informes)", expanded=True):
+                                for idx, row in df_estado.iterrows():
+                                    col_est1, col_est2 = st.columns([3, 1])
+                                    
+                                    with col_est1:
+                                        st.markdown(f"**{row['Centro']}**")
+                                        st.caption(f"👤 {row['Responsable']} | ⚡ {row['Prioridad']} | 📅 {row['Fecha_Inicio'].strftime('%Y-%m-%d')}")
+                                        
+                                        if pd.notna(row.get('Observaciones')) and row.get('Observaciones'):
+                                            obs_preview = str(row['Observaciones'])[:100]
+                                            st.caption(f"💬 {obs_preview}{'...' if len(str(row['Observaciones'])) > 100 else ''}")
+                                    
+                                    with col_est2:
+                                        if pd.notna(row.get('Observaciones')) and row.get('Observaciones'):
+                                            st.success("✅ Con obs.")
+                                        else:
+                                            st.warning("⚠️ Sin obs.")
+                                    
+                                    st.divider()
+                
+                st.divider()
+                
+                # Botones de exportación
+                st.markdown("### 📥 Exportar Reporte")
+                
+                col_exp1, col_exp2, col_exp3 = st.columns(3)
+                
+                with col_exp1:
+                    # Exportar CSV completo
+                    csv_completo = df_reporte.to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        "⬇️ Descargar CSV Completo",
+                        csv_completo,
+                        f"reporte_completo_{datetime.date.today()}.csv",
+                        "text/csv",
+                        use_container_width=True
+                    )
+                
+                with col_exp2:
+                    # Exportar solo con observaciones
+                    df_con_obs = df_reporte[df_reporte['Observaciones'].notna() & (df_reporte['Observaciones'] != '')]
+                    if not df_con_obs.empty:
+                        csv_con_obs = df_con_obs.to_csv(index=False).encode('utf-8')
+                        st.download_button(
+                            "⬇️ Solo Con Observaciones",
+                            csv_con_obs,
+                            f"reporte_con_observaciones_{datetime.date.today()}.csv",
+                            "text/csv",
+                            use_container_width=True
+                        )
                     else:
-                        nuevo_id = len(df_seguimiento) + 1
-                        nuevo_item = {
-                            "ID": nuevo_id,
-                            "Centro": centro_kanban,
-                            "Estado": "Pendiente",
-                            "Fecha_Inicio": fecha_inicio_kanban,
-                            "Fecha_Fin": None,
-                            "Responsable": resp_kanban,
-                            "Prioridad": prio_kanban,
-                            "Observaciones": observaciones_inicial if observaciones_inicial else ""
-                        }
-                        df_seguimiento = pd.concat([df_seguimiento, pd.DataFrame([nuevo_item])], ignore_index=True)
-                        guardar_seguimiento(df_seguimiento)
-                        st.success(f"Informe para {centro_kanban} agregado al tablero.")
-                        st.rerun()
+                        st.button("⬇️ Solo Con Observaciones", disabled=True, use_container_width=True)
+                        st.caption("No hay informes con observaciones")
+                
+                with col_exp3:
+                    # Exportar resumen
+                    resumen_data = {
+                        'Estado': [],
+                        'Cantidad': [],
+                        'Con_Observaciones': [],
+                        'Prioridad_Alta': []
+                    }
+                    
+                    for estado in ["Pendiente", "En Proceso", "Pausado", "Terminado"]:
+                        df_est = df_reporte[df_reporte['Estado'] == estado]
+                        resumen_data['Estado'].append(estado)
+                        resumen_data['Cantidad'].append(len(df_est))
+                        resumen_data['Con_Observaciones'].append(len(df_est[df_est['Observaciones'].notna() & (df_est['Observaciones'] != '')]))
+                        resumen_data['Prioridad_Alta'].append(len(df_est[df_est['Prioridad'] == 'Alta']))
+                    
+                    df_resumen = pd.DataFrame(resumen_data)
+                    csv_resumen = df_resumen.to_csv(index=False).encode('utf-8')
+                    st.download_button(
+                        "⬇️ Resumen Ejecutivo",
+                        csv_resumen,
+                        f"resumen_ejecutivo_{datetime.date.today()}.csv",
+                        "text/csv",
+                        use_container_width=True
+                    )
+            
+            else:
+                st.info("📭 No hay informes que coincidan con los filtros seleccionados.")
+        
+        with tab_kanban:
+            st.markdown("### Gestión Visual de Informes")
+            
+            # Botón para iniciar nuevo informe (Agregar al Kanban)
+            with st.expander("➕ Iniciar Nuevo Informe (Agregar al Tablero)", expanded=False):
+                # Campo de búsqueda fuera del formulario
+                lista_centros = sorted(df_centros['NOMBRE'].unique().tolist()) if 'NOMBRE' in df_centros.columns else []
+                busqueda = st.text_input("🔍 Buscar Centro Educativo", placeholder="Escribe para filtrar...", key="buscar_centro")
+                
+                # Filtrar centros según la búsqueda
+                if busqueda:
+                    centros_filtrados = [c for c in lista_centros if busqueda.upper() in c.upper()]
+                else:
+                    centros_filtrados = lista_centros
+                
+                st.caption(f"Mostrando {len(centros_filtrados)} de {len(lista_centros)} centros")
+                
+                with st.form("form_nuevo_seguimiento"):
+                    col_nk1, col_nk2 = st.columns(2)
+                    
+                    with col_nk1:
+                        centro_kanban = st.selectbox("Seleccionar Centro", centros_filtrados if centros_filtrados else ["No hay coincidencias"])
+                        resp_kanban = st.text_input("Responsable", value="Jeremy Fernández")
+                    
+                    with col_nk2:
+                        prio_kanban = st.select_slider("Prioridad", ["Baja", "Media", "Alta"], value="Media")
+                        fecha_inicio_kanban = st.date_input("Fecha de Inicio", value=datetime.date.today())
+                    
+                    observaciones_inicial = st.text_area("Observaciones Iniciales", placeholder="Notas, objetivos, requisitos especiales...")
+                    
+                    if st.form_submit_button("🚀 Iniciar Informe", type="primary", use_container_width=True):
+                        if centro_kanban == "No hay coincidencias":
+                            st.error("Por favor selecciona un centro válido")
+                        else:
+                            nuevo_id = len(df_seguimiento) + 1
+                            nuevo_item = {
+                                "ID": nuevo_id,
+                                "Centro": centro_kanban,
+                                "Estado": "Pendiente",
+                                "Fecha_Inicio": fecha_inicio_kanban,
+                                "Fecha_Fin": None,
+                                "Responsable": resp_kanban,
+                                "Prioridad": prio_kanban,
+                                "Observaciones": observaciones_inicial if observaciones_inicial else ""
+                            }
+                            df_seguimiento = pd.concat([df_seguimiento, pd.DataFrame([nuevo_item])], ignore_index=True)
+                            guardar_seguimiento(df_seguimiento)
+                            st.success(f"Informe para {centro_kanban} agregado al tablero.")
+                            st.rerun()
 
-        st.divider()
+            st.divider()
 
         # Columnas del Kanban (4 columnas ahora)
         col_pend, col_proc, col_pausa, col_fin = st.columns(4)
