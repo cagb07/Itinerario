@@ -193,15 +193,17 @@ else:
         
         # Métricas del Kanban
         total_seguimiento = len(df_seguimiento)
-        en_proceso = len(df_seguimiento[df_seguimiento['Estado'] == 'En Proceso'])
         pendientes_kanban = len(df_seguimiento[df_seguimiento['Estado'] == 'Pendiente'])
+        en_proceso = len(df_seguimiento[df_seguimiento['Estado'] == 'En Proceso'])
+        pausados_kanban = len(df_seguimiento[df_seguimiento['Estado'] == 'Pausado'])
         terminados_kanban = len(df_seguimiento[df_seguimiento['Estado'] == 'Terminado'])
         
-        k1, k2, k3, k4 = st.columns(4)
-        k1.metric("En Cola (Pendientes)", pendientes_kanban, help="Informes creados pero no iniciados")
-        k2.metric("⚡ En Proceso", en_proceso, delta_color="off", help="Informes que se están trabajando actualmente")
-        k3.metric("✅ Terminados", terminados_kanban, help="Total histórico de terminados")
-        k4.metric("Total Gestionados", total_seguimiento, help="Suma de todos los estados")
+        k1, k2, k3, k4, k5 = st.columns(5)
+        k1.metric("📋 Pendientes", pendientes_kanban, help="Informes creados pero no iniciados")
+        k2.metric("⚡ En Proceso", en_proceso, delta_color="off", help="Informes en trabajo activo")
+        k3.metric("⏸️ Pausados", pausados_kanban, help="Informes temporalmente detenidos")
+        k4.metric("✅ Terminados", terminados_kanban, help="Total histórico de terminados")
+        k5.metric("📊 Total", total_seguimiento, help="Suma de todos los estados")
         
         st.divider()
         
@@ -282,24 +284,32 @@ else:
 
         st.divider()
 
-        # Columnas del Kanban
-        col_pend, col_proc, col_fin = st.columns(3)
+        # Columnas del Kanban (4 columnas ahora)
+        col_pend, col_proc, col_pausa, col_fin = st.columns(4)
         
         # Estilos de cabecera
         col_pend.markdown("<h3 style='text-align: center; color: #dc3545;'>🔴 Pendiente</h3>", unsafe_allow_html=True)
         col_proc.markdown("<h3 style='text-align: center; color: #ffc107;'>🟡 En Proceso</h3>", unsafe_allow_html=True)
+        col_pausa.markdown("<h3 style='text-align: center; color: #6c757d;'>⏸️ Pausado</h3>", unsafe_allow_html=True)
         col_fin.markdown("<h3 style='text-align: center; color: #28a745;'>🟢 Terminado</h3>", unsafe_allow_html=True)
         
         # Filtrar datos
         df_pend = df_seguimiento[df_seguimiento['Estado'] == 'Pendiente']
         df_proc = df_seguimiento[df_seguimiento['Estado'] == 'En Proceso']
+        df_pausa = df_seguimiento[df_seguimiento['Estado'] == 'Pausado']
         df_fin = df_seguimiento[df_seguimiento['Estado'] == 'Terminado']
         
         # Función para renderizar tarjeta mejorada
         def render_card_mejorada(row, col_obj, current_status):
             with col_obj:
                 # Color según estado
-                color_borde = {'Pendiente': '#dc3545', 'En Proceso': '#ffc107', 'Terminado': '#28a745'}[current_status]
+                color_map = {
+                    'Pendiente': '#dc3545',
+                    'En Proceso': '#ffc107',
+                    'Pausado': '#6c757d',
+                    'Terminado': '#28a745'
+                }
+                color_borde = color_map.get(current_status, '#6c757d')
                 
                 # Obtener datos del centro si existe
                 centro_info = ""
@@ -324,34 +334,46 @@ else:
                     </div>
                     """, unsafe_allow_html=True)
                     
-                    # Botones de acción principales
-                    col_btn1, col_btn2 = st.columns(2)
+                    # Botones de acción principales según el estado
+                    if current_status == 'Pendiente':
+                        if st.button("➡️ Iniciar", key=f"start_{row['ID']}", use_container_width=True):
+                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
+                            guardar_seguimiento(df_seguimiento)
+                            st.rerun()
                     
-                    with col_btn1:
-                        if current_status == 'Pendiente':
-                            if st.button("➡️ Iniciar", key=f"start_{row['ID']}", use_container_width=True):
-                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
+                    elif current_status == 'En Proceso':
+                        col_btn1, col_btn2 = st.columns(2)
+                        with col_btn1:
+                            if st.button("⏸️ Pausar", key=f"pause_{row['ID']}", use_container_width=True):
+                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pausado'
                                 guardar_seguimiento(df_seguimiento)
                                 st.rerun()
-                        elif current_status == 'En Proceso':
-                            if st.button("⬅️ Pausar", key=f"pause_{row['ID']}", use_container_width=True):
-                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pendiente'
-                                guardar_seguimiento(df_seguimiento)
-                                st.rerun()
-                        elif current_status == 'Terminado':
-                            if st.button("↩️ Reabrir", key=f"reopen_{row['ID']}", use_container_width=True):
-                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
-                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Fecha_Fin'] = None
-                                guardar_seguimiento(df_seguimiento)
-                                st.rerun()
-                    
-                    with col_btn2:
-                        if current_status == 'En Proceso':
+                        with col_btn2:
                             if st.button("✅ Terminar", key=f"finish_{row['ID']}", use_container_width=True):
                                 df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Terminado'
                                 df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Fecha_Fin'] = datetime.date.today()
                                 guardar_seguimiento(df_seguimiento)
                                 st.rerun()
+                    
+                    elif current_status == 'Pausado':
+                        col_btn1, col_btn2 = st.columns(2)
+                        with col_btn1:
+                            if st.button("⬅️ Pendiente", key=f"topend_{row['ID']}", use_container_width=True):
+                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pendiente'
+                                guardar_seguimiento(df_seguimiento)
+                                st.rerun()
+                        with col_btn2:
+                            if st.button("▶️ Reanudar", key=f"resume_{row['ID']}", use_container_width=True):
+                                df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
+                                guardar_seguimiento(df_seguimiento)
+                                st.rerun()
+                    
+                    elif current_status == 'Terminado':
+                        if st.button("↩️ Reabrir", key=f"reopen_{row['ID']}", use_container_width=True):
+                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
+                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Fecha_Fin'] = None
+                            guardar_seguimiento(df_seguimiento)
+                            st.rerun()
                     
                     # Expander para detalles y edición
                     with st.expander("📝 Ver Detalles y Editar", expanded=False):
@@ -455,6 +477,9 @@ else:
             
         for _, row in df_proc.iterrows():
             render_card_mejorada(row, col_proc, 'En Proceso')
+        
+        for _, row in df_pausa.iterrows():
+            render_card_mejorada(row, col_pausa, 'Pausado')
             
         for _, row in df_fin.iterrows():
             render_card_mejorada(row, col_fin, 'Terminado')
