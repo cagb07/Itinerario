@@ -47,7 +47,7 @@ Sistema completo de gestión y planificación de informes para centros educativo
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/TU_USUARIO/control-informes.git
+git clone https://github.com/cagb07/control-informes.git
 cd control-informes
 
 # Instalar dependencias
