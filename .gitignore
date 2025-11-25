@@ -24,14 +24,6 @@ wheels/
 .installed.cfg
 *.egg
 
-# Datos sensibles (CSV con información real)
-LISTADO-CON-FASES.csv
-seguimiento_informes.csv
-calendario.csv
-
-# Permitir archivo de ejemplo
-!ejemplo_centros.csv
-
 # Streamlit
 .streamlit/secrets.toml
 

@@ -104,15 +104,15 @@ ARCHIVO_CALENDARIO = "calendario.csv"
 # --- FUNCIONES ---
 
 @st.cache_data
-def cargar_datos_maestros():
+def cargar_datos_maestros(archivo_datos):
     """Carga el listado maestro de centros."""
-    if not os.path.exists(ARCHIVO_DATOS):
+    if not os.path.exists(archivo_datos):
         return pd.DataFrame()
     try:
-        df = pd.read_csv(ARCHIVO_DATOS, header=1, encoding='utf-8')
+        df = pd.read_csv(archivo_datos, header=1, encoding='utf-8')
     except UnicodeDecodeError:
         try:
-            df = pd.read_csv(ARCHIVO_DATOS, header=1, encoding='latin-1')
+            df = pd.read_csv(archivo_datos, header=1, encoding='latin-1')
         except:
             return pd.DataFrame()
             
@@ -131,18 +131,18 @@ def cargar_datos_maestros():
     df.rename(columns=mapa, inplace=True)
     return df
 
-def cargar_seguimiento():
+def cargar_seguimiento(archivo_seguimiento):
     """Carga el estado de los informes (Kanban)."""
-    if os.path.exists(ARCHIVO_SEGUIMIENTO):
-        return pd.read_csv(ARCHIVO_SEGUIMIENTO)
+    if os.path.exists(archivo_seguimiento):
+        return pd.read_csv(archivo_seguimiento)
     return pd.DataFrame(columns=["ID", "Centro", "Estado", "Fecha_Inicio", "Fecha_Fin", "Responsable", "Prioridad"])
 
-def guardar_seguimiento(df):
-    df.to_csv(ARCHIVO_SEGUIMIENTO, index=False)
+def guardar_seguimiento(df, archivo_seguimiento):
+    df.to_csv(archivo_seguimiento, index=False)
 
 # --- CARGA DE DATOS ---
-df_centros = cargar_datos_maestros()
-df_seguimiento = cargar_seguimiento()
+df_centros = cargar_datos_maestros(ARCHIVO_DATOS)
+df_seguimiento = cargar_seguimiento(ARCHIVO_SEGUIMIENTO)
 
 # --- INTERFAZ ---
 
@@ -267,7 +267,7 @@ else:
                             "Prioridad": prio_kanban
                         }
                         df_seguimiento = pd.concat([df_seguimiento, pd.DataFrame([nuevo_item])], ignore_index=True)
-                        guardar_seguimiento(df_seguimiento)
+                        guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                         st.success(f"Informe para {centro_kanban} agregado al tablero.")
                         st.rerun()
 
@@ -301,22 +301,22 @@ else:
                     if current_status == 'Pendiente':
                         if c2.button("➡️ Iniciar", key=f"start_{row['ID']}"):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
-                            guardar_seguimiento(df_seguimiento)
+                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
                     elif current_status == 'En Proceso':
                         if c1.button("⬅️ Pausar", key=f"pause_{row['ID']}"):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pendiente'
-                            guardar_seguimiento(df_seguimiento)
+                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
                         if c2.button("✅ Terminar", key=f"finish_{row['ID']}"):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Terminado'
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Fecha_Fin'] = datetime.date.today()
-                            guardar_seguimiento(df_seguimiento)
+                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
                     elif current_status == 'Terminado':
                         if c1.button("↩️ Reabrir", key=f"reopen_{row['ID']}"):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
-                            guardar_seguimiento(df_seguimiento)
+                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
 
         # Renderizar columnas
@@ -597,4 +597,3 @@ else:
                                 st.cache_data.clear()
                                 time.sleep(2)
                                 st.rerun()
-
