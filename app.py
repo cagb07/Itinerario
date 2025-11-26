@@ -134,8 +134,12 @@ def cargar_datos_maestros(archivo_datos):
 def cargar_seguimiento(archivo_seguimiento):
     """Carga el estado de los informes (Kanban)."""
     if os.path.exists(archivo_seguimiento):
-        return pd.read_csv(archivo_seguimiento)
-    return pd.DataFrame(columns=["ID", "Centro", "Estado", "Fecha_Inicio", "Fecha_Fin", "Responsable", "Prioridad"])
+        df = pd.read_csv(archivo_seguimiento)
+        # Asegurar que existe la columna Observaciones
+        if 'Observaciones' not in df.columns:
+            df['Observaciones'] = ''
+        return df
+    return pd.DataFrame(columns=["ID", "Centro", "Estado", "Fecha_Inicio", "Fecha_Fin", "Responsable", "Prioridad", "Observaciones"])
 
 def guardar_seguimiento(df, archivo_seguimiento):
     df.to_csv(archivo_seguimiento, index=False)
@@ -195,13 +199,15 @@ else:
         total_seguimiento = len(df_seguimiento)
         en_proceso = len(df_seguimiento[df_seguimiento['Estado'] == 'En Proceso'])
         pendientes_kanban = len(df_seguimiento[df_seguimiento['Estado'] == 'Pendiente'])
+        pausados_kanban = len(df_seguimiento[df_seguimiento['Estado'] == 'Pausado'])
         terminados_kanban = len(df_seguimiento[df_seguimiento['Estado'] == 'Terminado'])
         
-        k1, k2, k3, k4 = st.columns(4)
-        k1.metric("En Cola (Pendientes)", pendientes_kanban, help="Informes creados pero no iniciados")
-        k2.metric("⚡ En Proceso", en_proceso, delta_color="off", help="Informes que se están trabajando actualmente")
-        k3.metric("✅ Terminados", terminados_kanban, help="Total histórico de terminados")
-        k4.metric("Total Gestionados", total_seguimiento, help="Suma de todos los estados")
+        k1, k2, k3, k4, k5 = st.columns(5)
+        k1.metric("⚪ Pendientes", pendientes_kanban, help="Informes creados pero no iniciados")
+        k2.metric("🟡 Pausados", pausados_kanban, help="Informes pausados temporalmente")
+        k3.metric("🔵 En Proceso", en_proceso, delta_color="off", help="Informes que se están trabajando actualmente")
+        k4.metric("🟢 Terminados", terminados_kanban, help="Total histórico de terminados")
+        k5.metric("📊 Total", total_seguimiento, help="Suma de todos los estados")
         
         st.divider()
         
@@ -251,6 +257,7 @@ else:
                 centro_kanban = st.selectbox("Seleccionar Centro", centros_filtrados if centros_filtrados else ["No hay coincidencias"])
                 resp_kanban = st.text_input("Responsable", value="Jeremy Fernández")
                 prio_kanban = st.select_slider("Prioridad", ["Baja", "Media", "Alta"], value="Media")
+                obs_kanban = st.text_area("Observaciones iniciales (opcional)", placeholder="Agrega comentarios, notas o detalles sobre este informe...")
                 
                 if st.form_submit_button("🚀 Iniciar Informe"):
                     if centro_kanban == "No hay coincidencias":
@@ -264,7 +271,8 @@ else:
                             "Fecha_Inicio": datetime.date.today(),
                             "Fecha_Fin": None,
                             "Responsable": resp_kanban,
-                            "Prioridad": prio_kanban
+                            "Prioridad": prio_kanban,
+                            "Observaciones": obs_kanban
                         }
                         df_seguimiento = pd.concat([df_seguimiento, pd.DataFrame([nuevo_item])], ignore_index=True)
                         guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
@@ -272,15 +280,17 @@ else:
                         st.rerun()
 
         # Columnas del Kanban
-        col_pend, col_proc, col_fin = st.columns(3)
+        col_pend, col_pausa, col_proc, col_fin = st.columns(4)
         
         # Estilos de cabecera
-        col_pend.markdown("<h3 style='text-align: center; color: #dc3545;'>🔴 Pendiente</h3>", unsafe_allow_html=True)
-        col_proc.markdown("<h3 style='text-align: center; color: #ffc107;'>🟡 En Proceso</h3>", unsafe_allow_html=True)
+        col_pend.markdown("<h3 style='text-align: center; color: #6c757d;'>⚪ Pendiente</h3>", unsafe_allow_html=True)
+        col_pausa.markdown("<h3 style='text-align: center; color: #ffc107;'>🟡 Pausado</h3>", unsafe_allow_html=True)
+        col_proc.markdown("<h3 style='text-align: center; color: #17a2b8;'>🔵 En Proceso</h3>", unsafe_allow_html=True)
         col_fin.markdown("<h3 style='text-align: center; color: #28a745;'>🟢 Terminado</h3>", unsafe_allow_html=True)
         
         # Filtrar datos
         df_pend = df_seguimiento[df_seguimiento['Estado'] == 'Pendiente']
+        df_pausa = df_seguimiento[df_seguimiento['Estado'] == 'Pausado']
         df_proc = df_seguimiento[df_seguimiento['Estado'] == 'En Proceso']
         df_fin = df_seguimiento[df_seguimiento['Estado'] == 'Terminado']
         
@@ -288,33 +298,82 @@ else:
         def render_card(row, col_obj, current_status):
             with col_obj:
                 with st.container():
+                    # Obtener información de ubicación del centro
+                    ubicacion_info = ""
+                    if 'NOMBRE' in df_centros.columns:
+                        centro_info = df_centros[df_centros['NOMBRE'] == row['Centro']]
+                        if not centro_info.empty and 'LATITUD' in df_centros.columns and 'LONGITUD' in df_centros.columns:
+                            lat = centro_info.iloc[0].get('LATITUD', '')
+                            lon = centro_info.iloc[0].get('LONGITUD', '')
+                            if lat and lon:
+                                ubicacion_info = f"<div class='kanban-meta'>📍 Ubicación: {lat}, {lon}</div>"
+                    
+                    # Observaciones
+                    obs_text = str(row.get('Observaciones', '')).strip()
+                    obs_display = f"<div class='kanban-meta'>💬 {obs_text[:80]}{'...' if len(obs_text) > 80 else ''}</div>" if obs_text else ""
+                    
+                    # Color del borde según estado
+                    border_colors = {
+                        'Pendiente': '#6c757d',
+                        'Pausado': '#ffc107',
+                        'En Proceso': '#17a2b8',
+                        'Terminado': '#28a745'
+                    }
+                    
                     st.markdown(f"""
-                    <div class="kanban-card" style="border-left-color: {'#dc3545' if current_status=='Pendiente' else '#ffc107' if current_status=='En Proceso' else '#28a745'};">
+                    <div class="kanban-card" style="border-left: 4px solid {border_colors.get(current_status, '#6c757d')};">
                         <div class="kanban-header">{row['Centro']}</div>
                         <div class="kanban-meta">👤 {row['Responsable']} | 📅 Inicio: {row['Fecha_Inicio']}</div>
                         <div class="kanban-meta">⚡ Prioridad: {row['Prioridad']}</div>
+                        {ubicacion_info}
+                        {obs_display}
                     </div>
                     """, unsafe_allow_html=True)
+                    
+                    # Botón para editar observaciones
+                    with st.expander("✏️ Editar Observaciones", expanded=False):
+                        nueva_obs = st.text_area(
+                            "Comentarios/Notas",
+                            value=obs_text,
+                            key=f"obs_edit_{row['ID']}",
+                            height=100,
+                            placeholder="Agrega detalles, problemas encontrados, soluciones aplicadas..."
+                        )
+                        if st.button("💾 Guardar Comentario", key=f"save_obs_{row['ID']}", use_container_width=True):
+                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Observaciones'] = nueva_obs
+                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            st.success("Comentario actualizado")
+                            time.sleep(0.5)
+                            st.rerun()
                     
                     # Controles de movimiento
                     c1, c2 = st.columns(2)
                     if current_status == 'Pendiente':
-                        if c2.button("➡️ Iniciar", key=f"start_{row['ID']}"):
+                        if c2.button("▶️ Iniciar", key=f"start_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
                             guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
-                    elif current_status == 'En Proceso':
-                        if c1.button("⬅️ Pausar", key=f"pause_{row['ID']}"):
+                    elif current_status == 'Pausado':
+                        if c1.button("▶️ Reanudar", key=f"resume_{row['ID']}", use_container_width=True):
+                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
+                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            st.rerun()
+                        if c2.button("🗑️ Cancelar", key=f"cancel_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pendiente'
                             guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
-                        if c2.button("✅ Terminar", key=f"finish_{row['ID']}"):
+                    elif current_status == 'En Proceso':
+                        if c1.button("⏸️ Pausar", key=f"pause_{row['ID']}", use_container_width=True):
+                            df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pausado'
+                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            st.rerun()
+                        if c2.button("✅ Terminar", key=f"finish_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Terminado'
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Fecha_Fin'] = datetime.date.today()
                             guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
                     elif current_status == 'Terminado':
-                        if c1.button("↩️ Reabrir", key=f"reopen_{row['ID']}"):
+                        if c1.button("↩️ Reabrir", key=f"reopen_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
                             guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
@@ -322,6 +381,9 @@ else:
         # Renderizar columnas
         for _, row in df_pend.iterrows():
             render_card(row, col_pend, 'Pendiente')
+        
+        for _, row in df_pausa.iterrows():
+            render_card(row, col_pausa, 'Pausado')
             
         for _, row in df_proc.iterrows():
             render_card(row, col_proc, 'En Proceso')
