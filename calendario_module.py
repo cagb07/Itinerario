@@ -217,10 +217,24 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario):
         lista_centros_final = sorted(df_filtrado['NOMBRE'].unique().tolist()) if 'NOMBRE' in df_filtrado.columns else []
         
         # Mostrar contador con más información
+        centros_con_citas = set(df_cal['Centro'].unique()) if not df_cal.empty else set()
+        centros_con_informes = set(df_seguimiento['Centro'].unique()) if not df_seguimiento.empty else set()
+        
         if busqueda_centro or filtro_prov != "Todas" or filtro_cat != "Todas" or filtro_canton != "Todos":
             st.info(f"🔍 **{len(lista_centros_final)}** centros encontrados de {len(df_centros)} totales")
         else:
             st.caption(f"📋 {len(lista_centros_final)} centros disponibles")
+        
+        # Mostrar estadísticas de estado
+        if lista_centros_final:
+            col_info1, col_info2, col_info3 = st.columns(3)
+            con_citas = len([c for c in lista_centros_final if c in centros_con_citas])
+            con_informes = len([c for c in lista_centros_final if c in centros_con_informes])
+            disponibles = len([c for c in lista_centros_final if c not in centros_con_citas and c not in centros_con_informes])
+            
+            col_info1.metric("📅 Con citas", con_citas)
+            col_info2.metric("📊 Con informes", con_informes)
+            col_info3.metric("✨ Disponibles", disponibles)
         
         st.divider()
         
@@ -240,10 +254,21 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario):
                 prioridad = st.select_slider("Prioridad", ["Baja", "Media", "Alta"], value="Media")
             
             nota = st.text_area("Notas", placeholder="Objetivos de la visita...")
-            crear_kanban = st.checkbox("✅ Crear en Kanban", value=True)
+            
+            # Verificar si el centro ya tiene informe en Kanban
+            tiene_informe = False
+            if centro_sel != "No hay coincidencias" and not df_seguimiento.empty:
+                tiene_informe = centro_sel in df_seguimiento['Centro'].values
+            
+            if tiene_informe:
+                st.info("ℹ️ Este centro ya tiene un informe registrado en el Kanban. No se creará uno nuevo.")
+                crear_kanban = False
+            else:
+                crear_kanban = st.checkbox("✅ Crear informe en Kanban", value=True, help="Crea automáticamente un registro en el tablero Kanban")
             
             if st.form_submit_button("📅 Agendar", type="primary", use_container_width=True):
                 errores = []
+                advertencias = []
                 
                 if centro_sel == "No hay coincidencias":
                     errores.append("Selecciona un centro válido")
@@ -252,10 +277,36 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario):
                 if not df_cal.empty:
                     if not df_cal[(df_cal['Fecha'] == fecha_visita) & (df_cal['Hora'] == hora_int)].empty:
                         errores.append("Horario ocupado")
+                    
+                    # Verificar si el centro ya tiene citas programadas
+                    citas_centro = df_cal[df_cal['Centro'] == centro_sel]
+                    if not citas_centro.empty:
+                        citas_activas = citas_centro[citas_centro['Estado'].isin(['Pendiente', 'Confirmada'])]
+                        if not citas_activas.empty:
+                            errores.append(f"⚠️ Este centro ya tiene {len(citas_activas)} cita(s) programada(s)")
+                            for _, cita_exist in citas_activas.iterrows():
+                                advertencias.append(f"   📅 {cita_exist['Fecha']} a las {int(cita_exist['Hora']):02d}:00 - Estado: {cita_exist['Estado']}")
+                
+                # Verificar si el centro ya tiene informe en Kanban
+                if not df_seguimiento.empty:
+                    informes_centro = df_seguimiento[df_seguimiento['Centro'] == centro_sel]
+                    if not informes_centro.empty:
+                        # Si ya tiene informe terminado, es un error crítico
+                        terminados = informes_centro[informes_centro['Estado'] == 'Terminado']
+                        if not terminados.empty:
+                            errores.append(f"✅ Este centro ya tiene un informe TERMINADO")
+                            advertencias.append(f"   Fecha finalización: {terminados.iloc[0]['Fecha_Fin']}")
+                        else:
+                            # Si está en proceso o pendiente, es advertencia
+                            en_proceso = informes_centro[informes_centro['Estado'].isin(['En Proceso', 'Pendiente', 'Pausado'])]
+                            if not en_proceso.empty:
+                                advertencias.append(f"ℹ️ Este centro ya tiene un informe en estado: {en_proceso.iloc[0]['Estado']}")
                 
                 if errores:
                     for e in errores:
                         st.error(f"❌ {e}")
+                    for adv in advertencias:
+                        st.warning(adv)
                 else:
                     centro_data = df_centros[df_centros['NOMBRE'] == centro_sel].iloc[0]
                     nueva_cita = {
@@ -274,7 +325,8 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario):
                     
                     guardar_registro(archivo_calendario, nueva_cita)
                     
-                    if crear_kanban:
+                    # Solo crear en Kanban si no existe ya un informe para este centro
+                    if crear_kanban and (df_seguimiento.empty or centro_sel not in df_seguimiento['Centro'].values):
                         from app import guardar_seguimiento
                         nuevo_kanban = {
                             "ID": len(df_seguimiento) + 1,
@@ -283,12 +335,14 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario):
                             "Fecha_Inicio": fecha_visita,
                             "Fecha_Fin": None,
                             "Responsable": "Sistema",
-                            "Prioridad": prioridad
+                            "Prioridad": prioridad,
+                            "Observaciones": f"Cita programada para {fecha_visita}"
                         }
                         df_seguimiento_new = pd.concat([df_seguimiento, pd.DataFrame([nuevo_kanban])], ignore_index=True)
-                        guardar_seguimiento(df_seguimiento_new)
-                    
-                    st.success(f"✅ Cita agendada: {centro_sel}")
+                        guardar_seguimiento(df_seguimiento_new, archivo_calendario.replace('calendario.csv', 'seguimiento_informes.csv'))
+                        st.success(f"✅ Cita agendada y registro creado en Kanban: {centro_sel}")
+                    else:
+                        st.success(f"✅ Cita agendada: {centro_sel}")
                     time.sleep(1)
                     st.rerun()
     
@@ -350,12 +404,19 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario):
                         df_cand = df_cand[df_cand['CATALOGO'].astype(str).isin(categorias)]
                     
                     centros_ocupados = set()
+                    
+                    # Excluir centros con informes terminados o en proceso
                     if not df_seguimiento.empty:
-                        centros_ocupados.update(df_seguimiento[df_seguimiento['Estado'] == 'Terminado']['Centro'].unique())
+                        centros_ocupados.update(df_seguimiento[df_seguimiento['Estado'].isin(['Terminado', 'En Proceso', 'Pausado'])]['Centro'].unique())
+                    
+                    # Excluir centros con citas programadas o confirmadas
                     if not df_cal.empty:
-                        centros_ocupados.update(df_cal['Centro'].unique())
+                        centros_con_citas = df_cal[df_cal['Estado'].isin(['Pendiente', 'Confirmada'])]['Centro'].unique()
+                        centros_ocupados.update(centros_con_citas)
                     
                     df_cand = df_cand[~df_cand['NOMBRE'].isin(centros_ocupados)]
+                    
+                    st.info(f"ℹ️ Centros excluidos (ya tienen citas o informes): {len(centros_ocupados)}")
                     
                     if df_cand.empty:
                         st.warning("No hay centros disponibles")
