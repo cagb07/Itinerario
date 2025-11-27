@@ -4,6 +4,10 @@ import datetime
 import os
 import time
 
+# Importar módulos personalizados
+import auth_module
+import calendario_module
+
 # --- CONFIGURACIÓN DE PÁGINA ---
 st.set_page_config(
     page_title="Control de Informes",
@@ -11,6 +15,9 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# --- INICIALIZAR SESIÓN ---
+auth_module.inicializar_sesion()
 
 # --- ESTILOS CSS OPTIMIZADOS PARA TEMA OSCURO ---
 st.markdown("""
@@ -99,7 +106,14 @@ st.markdown("""
 # --- CONSTANTES ---
 ARCHIVO_DATOS = "LISTADO-CON-FASES.csv"
 ARCHIVO_SEGUIMIENTO = "seguimiento_informes.csv"
-ARCHIVO_CALENDARIO = "calendario.csv"
+
+# --- VERIFICAR AUTENTICACIÓN ---
+if not st.session_state.autenticado:
+    auth_module.render_login()
+    st.stop()
+
+# --- OBTENER ARCHIVO DE CALENDARIO DEL USUARIO ---
+ARCHIVO_CALENDARIO = calendario_module.obtener_archivo_calendario_usuario(st.session_state.usuario)
 
 # --- FUNCIONES ---
 
@@ -151,10 +165,29 @@ df_seguimiento = cargar_seguimiento(ARCHIVO_SEGUIMIENTO)
 # --- INTERFAZ ---
 
 with st.sidebar:
+    # Información del usuario
+    st.markdown(f"""
+    ### 👤 {st.session_state.datos_usuario.get('nombre_completo', 'Usuario')}
+    **Rol:** {st.session_state.datos_usuario.get('rol', 'N/A')}
+    """)
+    st.divider()
+    
+    # Menú principal
     st.title("📝 Control Informes")
-    menu = st.radio("Menú", ["Dashboard de Control", "Kanban de Informes", "Calendario", "Base de Datos"], index=0)
+    opciones_menu = ["Dashboard de Control", "Kanban de Informes", "Calendario", "Base de Datos"]
+    
+    # Agregar opción de gestión de usuarios si es admin
+    if st.session_state.datos_usuario.get('rol') == 'admin':
+        opciones_menu.append("👥 Gestión de Usuarios")
+    
+    menu = st.radio("Menú", opciones_menu, index=0)
     st.divider()
     st.info(f"📅 Hoy: {datetime.date.today().strftime('%d/%m/%Y')}")
+    
+    # Botón de cerrar sesión
+    if st.button("🚪 Cerrar Sesión", use_container_width=True):
+        auth_module.logout()
+        st.rerun()
 
 if df_centros.empty:
     st.error("⚠️ No se encuentra el archivo maestro de centros (LISTADO-CON-FASES.csv).")
@@ -394,7 +427,11 @@ else:
     # --- CALENDARIO: PLANIFICACIÓN DE INFORMES (MÓDULO MEJORADO) ---
     elif menu == "Calendario":
         from calendario_module import render_calendario
-        render_calendario(df_centros, df_seguimiento, ARCHIVO_CALENDARIO)
+        render_calendario(df_centros, df_seguimiento, ARCHIVO_CALENDARIO, usuario=st.session_state.usuario)
+    
+    # --- GESTIÓN DE USUARIOS (SOLO ADMIN) ---
+    elif menu == "👥 Gestión de Usuarios":
+        auth_module.render_gestion_usuarios()
 
     # --- BASE DE DATOS ---
     elif menu == "Base de Datos":

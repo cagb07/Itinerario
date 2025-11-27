@@ -6,11 +6,20 @@ import time
 
 # --- DATA FUNCTIONS ---
 
+def obtener_archivo_calendario_usuario(usuario):
+    """Devuelve el nombre del archivo de calendario específico del usuario"""
+    return f"calendario_{usuario}.csv"
+
 def cargar_calendario(archivo_calendario):
     """Loads the calendar data from the CSV file."""
     if os.path.exists(archivo_calendario):
-        return pd.read_csv(archivo_calendario)
+        df = pd.read_csv(archivo_calendario)
+        return df
     return pd.DataFrame()
+
+def guardar_calendario(df_calendario, archivo_calendario):
+    """Guarda el DataFrame completo del calendario (reemplaza el archivo)"""
+    df_calendario.to_csv(archivo_calendario, index=False)
 
 def guardar_registro(ruta, datos):
     """Saves a new record to the specified CSV file."""
@@ -22,10 +31,21 @@ def guardar_registro(ruta, datos):
 
 # --- MAIN RENDER FUNCTION ---
 
-def render_calendario(df_centros, df_seguimiento, archivo_calendario):
-    """Módulo completo del sistema de calendario mejorado"""
+def render_calendario(df_centros, df_seguimiento, archivo_calendario, usuario=None):
+    """Módulo completo del sistema de calendario mejorado
     
-    st.title("📅 Sistema de Planificación de Informes")
+    Args:
+        df_centros: DataFrame con los centros educativos
+        df_seguimiento: DataFrame con el seguimiento de informes
+        archivo_calendario: Archivo de calendario (puede ser específico del usuario)
+        usuario: Nombre del usuario actual (opcional, para mostrar en título)
+    """
+    
+    # Mostrar título con usuario si está disponible
+    if usuario:
+        st.title(f"📅 Sistema de Planificación de Informes - {usuario}")
+    else:
+        st.title("📅 Sistema de Planificación de Informes")
     
     # Cargar calendario
     df_cal = cargar_calendario(archivo_calendario)
@@ -369,14 +389,14 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario):
                         
                         if st.button("💾 Guardar", key=f"save_{idx}"):
                             df_cal.loc[idx, 'Estado'] = nuevo_estado
-                            df_cal.to_csv(archivo_calendario, index=False)
+                            guardar_calendario(df_cal, archivo_calendario)
                             st.success("✅ Actualizado")
                             time.sleep(0.5)
                             st.rerun()
                         
                         if st.button("🗑️ Eliminar", key=f"del_{idx}"):
-                            df_cal = df_cal.drop(idx)
-                            df_cal.to_csv(archivo_calendario, index=False)
+                            df_cal = df_cal.drop(idx).reset_index(drop=True)
+                            guardar_calendario(df_cal, archivo_calendario)
                             st.success("🗑️ Eliminada")
                             time.sleep(0.5)
                             st.rerun()
@@ -465,10 +485,14 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario):
                         
                         if nuevas:
                             df_nuevas = pd.DataFrame(nuevas)
-                            if not os.path.exists(archivo_calendario):
-                                df_nuevas.to_csv(archivo_calendario, index=False)
+                            # Cargar el calendario actual y agregar las nuevas citas
+                            if not df_cal.empty:
+                                df_cal_actualizado = pd.concat([df_cal, df_nuevas], ignore_index=True)
                             else:
-                                df_nuevas.to_csv(archivo_calendario, mode='a', header=False, index=False)
+                                df_cal_actualizado = df_nuevas
+                            
+                            # Guardar el calendario completo
+                            guardar_calendario(df_cal_actualizado, archivo_calendario)
                             
                             st.success(f"✅ {len(nuevas)} citas generadas")
                             st.dataframe(df_nuevas[['Fecha', 'Hora', 'Centro', 'Provincia']].head(10))
