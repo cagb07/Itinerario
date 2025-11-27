@@ -1,12 +1,26 @@
 # 📝 Sistema de Control de Informes
 
-Sistema completo de gestión y planificación de informes para centros educativos, desarrollado con Streamlit.
+Sistema completo de gestión y planificación de informes para centros educativos con **autenticación de usuarios** y **calendarios independientes**, desarrollado con Streamlit.
 
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
-![Streamlit](https://img.shields.io/badge/streamlit-1.28.0-red.svg)
+![Streamlit](https://img.shields.io/badge/streamlit-1.51.0-red.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 ## 🎯 Características Principales
+
+### 🔐 Sistema de Autenticación (NUEVO)
+- **Login seguro** con usuario y contraseña
+- **Contraseñas encriptadas** con SHA-256
+- **Roles de usuario**: Admin y Usuario estándar
+- **Gestión de usuarios**: Crear, activar/desactivar, cambiar contraseñas
+- **Sesiones persistentes** durante toda la navegación
+- **Usuario por defecto**: `admin` / `admin123`
+
+### 📅 Calendarios Individuales por Usuario (NUEVO)
+- **Calendarios privados**: Cada usuario tiene su propio calendario
+- **Archivos independientes**: `calendario_usuario.csv` por cada usuario
+- **No más conflictos**: Las agendas no se borran entre usuarios
+- **Privacidad total**: Solo ves tu propio calendario
 
 ### 📊 Dashboard de Control
 - Monitoreo en tiempo real del avance de informes
@@ -20,7 +34,7 @@ Sistema completo de gestión y planificación de informes para centros educativo
 - Gestión de prioridades
 - Asignación de responsables
 
-### 📅 Sistema de Calendario
+### 📅 Sistema de Calendario Mejorado
 - **Vistas múltiples**: Diaria, Semanal
 - **Búsqueda inteligente**: Por cualquier criterio (nombre, código, provincia, cantón)
 - **Gestión completa de citas**: Crear, editar, eliminar, reprogramar
@@ -28,7 +42,7 @@ Sistema completo de gestión y planificación de informes para centros educativo
 - **Generador automático**: Crea itinerarios optimizados
 - **Validaciones inteligentes**: Evita conflictos y duplicados
 - **Integración Kanban-Calendario**: Sincronización bidireccional
-- **Exportación**: CSV e ICS (compatible con Google Calendar/Outlook)
+- **Bug de borrado SOLUCIONADO**: Ya no se pierden agendas al actualizar/eliminar
 
 ### 📂 Gestión de Base de Datos
 - **Agregar centros**: Manual o importación masiva CSV
@@ -47,8 +61,8 @@ Sistema completo de gestión y planificación de informes para centros educativo
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/TU_USUARIO/control-informes.git
-cd control-informes
+git clone https://github.com/cagb07/Itinerario.git
+cd Itinerario
 
 # Instalar dependencias
 pip install -r requirements.txt
@@ -59,27 +73,66 @@ streamlit run app.py
 
 La aplicación estará disponible en `http://localhost:8501`
 
+### 🔐 Primer Login
+
+Al iniciar por primera vez, usa las credenciales por defecto:
+- **Usuario:** `admin`
+- **Contraseña:** `admin123`
+
+⚠️ **IMPORTANTE:** Cambia la contraseña del admin inmediatamente después del primer inicio.
+
 ## 📁 Estructura del Proyecto
 
 ```
 Itinerario/
-├── app.py                      # Aplicación principal
-├── calendario_module.py        # Módulo de calendario mejorado
-├── requirements.txt            # Dependencias de Python
+├── app.py                         # Aplicación principal
+├── auth_module.py                 # Sistema de autenticación (NUEVO)
+├── calendario_module.py           # Módulo de calendario (MEJORADO)
+├── requirements.txt               # Dependencias de Python
 ├── .streamlit/
-│   └── config.toml            # Configuración (tema oscuro)
-├── .gitignore                 # Archivos ignorados por Git
-├── LISTADO-CON-FASES.csv      # Base de datos de centros
-├── seguimiento_informes.csv    # Datos del Kanban
-├── calendario.csv              # Datos de citas
-├── ejemplo_centros.csv         # Archivo de ejemplo
-├── DEPLOY.md                   # Guía de despliegue
-├── MEJORAS_CALENDARIO.md       # Documentación del calendario
-├── GESTION_CENTROS.md          # Documentación de gestión
-└── README.md                   # Este archivo
+│   └── config.toml               # Configuración (tema oscuro)
+├── .gitignore                    # Archivos ignorados por Git
+├── LISTADO-CON-FASES.csv         # Base de datos de centros
+├── seguimiento_informes.csv       # Datos del Kanban (compartido)
+├── usuarios.csv                   # Base de datos de usuarios (NUEVO)
+├── calendario_usuario.csv         # Calendarios por usuario (NUEVO)
+├── test_auth.py                   # Tests de autenticación (NUEVO)
+├── test_calendario.py             # Tests de calendario (NUEVO)
+├── DEPLOY.md                      # Guía de despliegue
+├── SISTEMA_AUTENTICACION.md       # Documentación técnica (NUEVO)
+├── GUIA_USO.md                    # Guía rápida de usuario (NUEVO)
+├── MEJORAS_CALENDARIO.md          # Documentación del calendario
+├── GESTION_CENTROS.md             # Documentación de gestión
+└── README.md                      # Este archivo
 ```
 
+## 📚 Documentación
+
+- **[GUIA_USO.md](GUIA_USO.md)** - Guía rápida para usuarios
+- **[SISTEMA_AUTENTICACION.md](SISTEMA_AUTENTICACION.md)** - Documentación técnica completa del sistema de autenticación
+- **[MEJORAS_CALENDARIO.md](MEJORAS_CALENDARIO.md)** - Detalles del sistema de calendario
+- **[GESTION_CENTROS.md](GESTION_CENTROS.md)** - Gestión de base de datos
+- **[DEPLOY.md](DEPLOY.md)** - Guía de despliegue en producción
+
+## 🆕 Cambios Recientes (v2.0)
+
+### ✅ Implementaciones Nuevas
+- 🔐 **Sistema de autenticación completo** con usuarios y contraseñas
+- 👥 **Gestión de usuarios** para administradores
+- 📅 **Calendarios independientes** por usuario
+- 🔒 **Contraseñas encriptadas** con SHA-256
+- 💾 **Sesiones persistentes** con `st.session_state`
+
+### 🐛 Bugs Corregidos
+- ✅ **Bug de borrado de agendas**: Las citas ya no se pierden al actualizar o eliminar
+- ✅ **Sobrescritura de calendarios**: Los usuarios ya no comparten el mismo archivo
+- ✅ **Duplicación de registros**: La generación automática ya no duplica citas
+- ✅ **Índices incorrectos**: Eliminación de citas ahora resetea índices correctamente
+
 ## 🎨 Capturas de Pantalla
+
+### Pantalla de Login (NUEVO)
+![Login](docs/login.png)
 
 ### Dashboard de Control
 ![Dashboard](docs/dashboard.png)
