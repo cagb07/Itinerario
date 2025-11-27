@@ -1,6 +1,6 @@
 # 📝 Sistema de Control de Informes
 
-Sistema completo de gestión y planificación de informes para centros educativos con **autenticación de usuarios** y **calendarios independientes**, desarrollado con Streamlit.
+Sistema completo de gestión y seguimiento de informes para centros educativos con **autenticación de usuarios** y **tablero Kanban mejorado**, desarrollado con Streamlit.
 
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/streamlit-1.51.0-red.svg)
@@ -8,7 +8,7 @@ Sistema completo de gestión y planificación de informes para centros educativo
 
 ## 🎯 Características Principales
 
-### 🔐 Sistema de Autenticación (NUEVO)
+### 🔐 Sistema de Autenticación
 - **Login seguro** con usuario y contraseña
 - **Contraseñas encriptadas** con SHA-256
 - **Roles de usuario**: Admin y Usuario estándar
@@ -16,33 +16,21 @@ Sistema completo de gestión y planificación de informes para centros educativo
 - **Sesiones persistentes** durante toda la navegación
 - **Usuario por defecto**: `admin` / `admin123`
 
-### 📅 Calendarios Individuales por Usuario (NUEVO)
-- **Calendarios privados**: Cada usuario tiene su propio calendario
-- **Archivos independientes**: `calendario_usuario.csv` por cada usuario
-- **No más conflictos**: Las agendas no se borran entre usuarios
-- **Privacidad total**: Solo ves tu propio calendario
-
 ### 📊 Dashboard de Control
 - Monitoreo en tiempo real del avance de informes
 - Métricas de cobertura global
 - Visualización del flujo de trabajo
 - Gráficos de actividad reciente
 
-### 📋 Kanban de Informes
-- Tablero visual de seguimiento (Pendiente → En Proceso → Terminado)
-- Búsqueda avanzada de centros educativos
-- Gestión de prioridades
-- Asignación de responsables
-
-### 📅 Sistema de Calendario Mejorado
-- **Vistas múltiples**: Diaria, Semanal
-- **Búsqueda inteligente**: Por cualquier criterio (nombre, código, provincia, cantón)
-- **Gestión completa de citas**: Crear, editar, eliminar, reprogramar
-- **Estados de citas**: Pendiente, Confirmada, Completada, Cancelada
-- **Generador automático**: Crea itinerarios optimizados
-- **Validaciones inteligentes**: Evita conflictos y duplicados
-- **Integración Kanban-Calendario**: Sincronización bidireccional
-- **Bug de borrado SOLUCIONADO**: Ya no se pierden agendas al actualizar/eliminar
+### 📋 Kanban de Informes Mejorado (NUEVO)
+- **Tablero visual de seguimiento**: Pendiente → Pausado → En Proceso → Terminado
+- **Prevención de duplicados**: No permite crear informes repetidos para el mismo centro
+- **Búsqueda avanzada multi-criterio**: Por nombre, código, provincia, cantón
+- **Filtrado inteligente**: Por estado, prioridad, centro o responsable
+- **Información contextual**: Muestra datos del centro al seleccionarlo
+- **Gestión de prioridades**: Baja, Media, Alta
+- **Asignación automática**: Responsable por defecto del usuario logueado
+- **Contador de informes**: Visualiza cuántos centros ya tienen informes
 
 ### 📂 Gestión de Base de Datos
 - **Agregar centros**: Manual o importación masiva CSV
@@ -86,20 +74,18 @@ Al iniciar por primera vez, usa las credenciales por defecto:
 ```
 Itinerario/
 ├── app.py                         # Aplicación principal
-├── auth_module.py                 # Sistema de autenticación (NUEVO)
-├── calendario_module.py           # Módulo de calendario (MEJORADO)
+├── auth_module.py                 # Sistema de autenticación
+├── utils.py                       # Funciones utilitarias compartidas
 ├── requirements.txt               # Dependencias de Python
 ├── .streamlit/
 │   └── config.toml               # Configuración (tema oscuro)
 ├── .gitignore                    # Archivos ignorados por Git
 ├── LISTADO-CON-FASES.csv         # Base de datos de centros
-├── seguimiento_informes.csv       # Datos del Kanban (compartido)
-├── usuarios.csv                   # Base de datos de usuarios (NUEVO)
-├── calendario_usuario.csv         # Calendarios por usuario (NUEVO)
-├── test_auth.py                   # Tests de autenticación (NUEVO)
-├── test_calendario.py             # Tests de calendario (NUEVO)
+├── seguimiento_informes.csv       # Datos del Kanban
+├── usuarios.csv                   # Base de datos de usuarios
+├── test_auth.py                   # Tests de autenticación
 ├── DEPLOY.md                      # Guía de despliegue
-├── SISTEMA_AUTENTICACION.md       # Documentación técnica (NUEVO)
+├── SISTEMA_AUTENTICACION.md       # Documentación técnica
 ├── GUIA_USO.md                    # Guía rápida de usuario (NUEVO)
 ├── MEJORAS_CALENDARIO.md          # Documentación del calendario
 ├── GESTION_CENTROS.md             # Documentación de gestión
@@ -114,34 +100,34 @@ Itinerario/
 - **[GESTION_CENTROS.md](GESTION_CENTROS.md)** - Gestión de base de datos
 - **[DEPLOY.md](DEPLOY.md)** - Guía de despliegue en producción
 
-## 🆕 Cambios Recientes (v2.0)
+## 🆕 Cambios Recientes (v3.0 - Noviembre 2025)
 
-### ✅ Implementaciones Nuevas
-- 🔐 **Sistema de autenticación completo** con usuarios y contraseñas
-- 👥 **Gestión de usuarios** para administradores
-- 📅 **Calendarios independientes** por usuario
-- 🔒 **Contraseñas encriptadas** con SHA-256
-- 💾 **Sesiones persistentes** con `st.session_state`
+### ✅ Mejoras Implementadas
+- 🚀 **Kanban mejorado con prevención de duplicados**: No permite crear informes repetidos
+- 🔍 **Búsqueda avanzada multi-criterio**: Busca por nombre, código, provincia, cantón
+- 📊 **Filtrado inteligente**: Filtra por estado, prioridad y responsable
+- 💡 **Información contextual**: Muestra datos del centro al seleccionarlo
+- 🎯 **Experiencia de usuario optimizada**: Asignación automática de responsables
 
-### 🐛 Bugs Corregidos
-- ✅ **Bug de borrado de agendas**: Las citas ya no se pierden al actualizar o eliminar
-- ✅ **Sobrescritura de calendarios**: Los usuarios ya no comparten el mismo archivo
-- ✅ **Duplicación de registros**: La generación automática ya no duplica citas
-- ✅ **Índices incorrectos**: Eliminación de citas ahora resetea índices correctamente
+### 🗑️ Módulos Eliminados
+- ❌ **Módulo de Calendario**: Removido para simplificar la aplicación
+- ✨ **Enfoque en Kanban**: Toda la gestión ahora se centra en el tablero Kanban
+
+### 🐛 Bugs Corregidos (v2.x)
+- ✅ **Importación circular**: Resuelto con módulo utils.py
+- ✅ **KeyError en calendario**: Manejo robusto de archivos vacíos
+- ✅ **Duplicación de informes**: Validación antes de crear
 
 ## 🎨 Capturas de Pantalla
 
-### Pantalla de Login (NUEVO)
+### Pantalla de Login
 ![Login](docs/login.png)
 
 ### Dashboard de Control
 ![Dashboard](docs/dashboard.png)
 
-### Kanban de Informes
+### Kanban de Informes (Mejorado)
 ![Kanban](docs/kanban.png)
-
-### Calendario - Vista Diaria
-![Calendario](docs/calendario.png)
 
 ### Gestión de Centros
 ![Gestión](docs/gestion.png)
@@ -169,7 +155,7 @@ textColor="#fafafa"
 ### Archivos de Datos
 - `LISTADO-CON-FASES.csv` - Base de datos de centros educativos
 - `seguimiento_informes.csv` - Estado de informes (Kanban)
-- `calendario.csv` - Citas programadas
+- `usuarios.csv` - Usuarios del sistema
 
 ## 🚀 Despliegue
 
@@ -189,17 +175,17 @@ Base de Datos → Agregar Centros → Manual o CSV
 
 ### 2. Crear Informe en Kanban
 ```
-Kanban de Informes → Iniciar Nuevo Informe → Seleccionar Centro
+Kanban de Informes → Iniciar Nuevo Informe → Buscar Centro → Crear Informe
 ```
 
-### 3. Agendar Cita
+### 3. Buscar y Filtrar Informes
 ```
-Calendario → Agendar Cita → Buscar Centro → Programar
+Kanban de Informes → Buscar y Filtrar → Aplicar filtros por estado/prioridad
 ```
 
-### 4. Generar Itinerario Automático
+### 4. Gestionar Estado del Informe
 ```
-Calendario → Generador Automático → Configurar → Generar
+Kanban → Seleccionar tarjeta → Cambiar estado → Agregar observaciones
 ```
 
 ## 🔒 Seguridad
@@ -220,14 +206,21 @@ Las contribuciones son bienvenidas. Por favor:
 
 ## 📝 Changelog
 
+### v3.0.0 (2025-11-27)
+- 🚀 Kanban mejorado con prevención de duplicados
+- 🔍 Búsqueda avanzada multi-criterio (nombre, código, provincia, cantón)
+- 📊 Filtrado inteligente por estado, prioridad y responsable
+- 💡 Información contextual al seleccionar centros
+- 🎯 Asignación automática de responsables
+- 🗑️ Eliminación del módulo de calendario (simplificación)
+- 🐛 Corrección de importaciones circulares
+- 🐛 Corrección de KeyError en manejo de archivos vacíos
+
 ### v2.0.0 (2025-11-24)
-- ✨ Sistema de calendario completamente rediseñado
-- ✨ Vistas múltiples (Diaria, Semanal)
-- ✨ Búsqueda por cualquier criterio
-- ✨ Gestión completa de citas (CRUD)
-- ✨ Generador automático optimizado
-- ✨ Integración Kanban-Calendario
-- ✨ Exportación ICS
+- 🔐 Sistema de autenticación completo
+- 👥 Gestión de usuarios para administradores
+- 🔒 Contraseñas encriptadas con SHA-256
+- 💾 Sesiones persistentes
 - ✨ Gestión de centros educativos (agregar, editar, eliminar)
 - ✨ Importación masiva CSV
 - 🎨 Tema oscuro permanente
@@ -252,7 +245,7 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## 👨‍💻 Autor
 
-**Jeremy Fernández**
+**Cristian Granados**
 - Sistema desarrollado para la gestión de informes de centros educativos
 
 ## 🙏 Agradecimientos
@@ -264,7 +257,7 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 ## 📞 Soporte
 
 Para soporte técnico:
-- 📧 Email: soporte@ejemplo.com
+- 📧 Email: cagb08@gmail.com
 - 💬 Discord: [Servidor de Soporte](#)
 - 📖 Documentación: Ver archivos `.md` en el proyecto
 

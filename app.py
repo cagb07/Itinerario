@@ -6,7 +6,6 @@ import time
 
 # Importar módulos personalizados
 import auth_module
-import calendario_module
 import utils
 
 # --- CONFIGURACIÓN DE PÁGINA ---
@@ -113,9 +112,6 @@ if not st.session_state.autenticado:
     auth_module.render_login()
     st.stop()
 
-# --- OBTENER ARCHIVO DE CALENDARIO DEL USUARIO ---
-ARCHIVO_CALENDARIO = calendario_module.obtener_archivo_calendario_usuario(st.session_state.usuario)
-
 # --- FUNCIONES ---
 
 @st.cache_data
@@ -172,7 +168,7 @@ with st.sidebar:
     
     # Menú principal
     st.title("📝 Control Informes")
-    opciones_menu = ["Dashboard de Control", "Kanban de Informes", "Calendario", "Base de Datos"]
+    opciones_menu = ["Dashboard de Control", "Kanban de Informes", "Base de Datos"]
     
     # Agregar opción de gestión de usuarios si es admin
     if st.session_state.datos_usuario.get('rol') == 'admin':
@@ -272,29 +268,95 @@ else:
         
         # Botón para iniciar nuevo informe (Agregar al Kanban)
         with st.expander("➕ Iniciar Nuevo Informe (Agregar al Tablero)", expanded=False):
+            # Obtener lista de centros existentes en el Kanban
+            centros_con_informe = set(df_seguimiento['Centro'].unique()) if not df_seguimiento.empty and 'Centro' in df_seguimiento.columns else set()
+            
             # Campo de búsqueda fuera del formulario
             lista_centros = sorted(df_centros['NOMBRE'].unique().tolist()) if 'NOMBRE' in df_centros.columns else []
-            busqueda = st.text_input("🔍 Buscar Centro Educativo", placeholder="Escribe para filtrar...", key="buscar_centro")
             
-            # Filtrar centros según la búsqueda
+            # Mostrar advertencia si hay centros con informes
+            if centros_con_informe:
+                st.info(f"ℹ️ {len(centros_con_informe)} centros ya tienen informes registrados y no se mostrarán en la lista")
+            
+            # Búsqueda mejorada con múltiples criterios
+            col_busq1, col_busq2 = st.columns([3, 1])
+            with col_busq1:
+                busqueda = st.text_input(
+                    "🔍 Buscar Centro Educativo", 
+                    placeholder="Buscar por nombre, código, provincia o cantón...", 
+                    key="buscar_centro",
+                    help="Busca por cualquier campo: nombre, código, provincia, cantón"
+                )
+            
+            with col_busq2:
+                solo_sin_informe = st.checkbox("Solo sin informe", value=True, help="Mostrar solo centros sin informes")
+            
+            # Filtrar centros según la búsqueda (búsqueda en múltiples columnas)
             if busqueda:
-                centros_filtrados = [c for c in lista_centros if busqueda.upper() in c.upper()]
+                # Crear DataFrame temporal para búsqueda avanzada
+                df_busqueda = df_centros.copy()
+                busqueda_upper = busqueda.upper()
+                
+                # Buscar en múltiples columnas
+                mask = pd.Series([False] * len(df_busqueda))
+                if 'NOMBRE' in df_busqueda.columns:
+                    mask |= df_busqueda['NOMBRE'].fillna('').astype(str).str.upper().str.contains(busqueda_upper, na=False)
+                if 'CODIGO' in df_busqueda.columns:
+                    mask |= df_busqueda['CODIGO'].fillna('').astype(str).str.upper().str.contains(busqueda_upper, na=False)
+                if 'PROVINCIA' in df_busqueda.columns:
+                    mask |= df_busqueda['PROVINCIA'].fillna('').astype(str).str.upper().str.contains(busqueda_upper, na=False)
+                if 'CANTON' in df_busqueda.columns:
+                    mask |= df_busqueda['CANTON'].fillna('').astype(str).str.upper().str.contains(busqueda_upper, na=False)
+                
+                df_busqueda = df_busqueda[mask]
+                centros_filtrados = sorted(df_busqueda['NOMBRE'].unique().tolist()) if 'NOMBRE' in df_busqueda.columns else []
             else:
                 centros_filtrados = lista_centros
             
-            st.caption(f"Mostrando {len(centros_filtrados)} de {len(lista_centros)} centros")
+            # Filtrar centros que ya tienen informe si está activada la opción
+            if solo_sin_informe:
+                centros_filtrados = [c for c in centros_filtrados if c not in centros_con_informe]
+            
+            st.caption(f"📊 Mostrando {len(centros_filtrados)} de {len(lista_centros)} centros | 📋 {len(centros_con_informe)} con informes registrados")
             
             with st.form("form_nuevo_seguimiento"):
-                centro_kanban = st.selectbox("Seleccionar Centro", centros_filtrados if centros_filtrados else ["No hay coincidencias"])
-                resp_kanban = st.text_input("Responsable", value="Jeremy Fernández")
-                prio_kanban = st.select_slider("Prioridad", ["Baja", "Media", "Alta"], value="Media")
-                obs_kanban = st.text_area("Observaciones iniciales (opcional)", placeholder="Agrega comentarios, notas o detalles sobre este informe...")
+                centro_kanban = st.selectbox(
+                    "Seleccionar Centro", 
+                    centros_filtrados if centros_filtrados else ["No hay coincidencias"],
+                    help="Selecciona el centro educativo para crear el informe"
+                )
                 
-                if st.form_submit_button("🚀 Iniciar Informe"):
+                # Mostrar información del centro seleccionado
+                if centro_kanban and centro_kanban != "No hay coincidencias":
+                    centro_info = df_centros[df_centros['NOMBRE'] == centro_kanban]
+                    if not centro_info.empty:
+                        info_centro = centro_info.iloc[0]
+                        st.info(
+                            f"**Código:** {info_centro.get('CODIGO', 'N/A')} | "
+                            f"**Provincia:** {info_centro.get('PROVINCIA', 'N/A')} | "
+                            f"**Cantón:** {info_centro.get('CANTON', 'N/A')}"
+                        )
+                
+                col_form1, col_form2 = st.columns(2)
+                with col_form1:
+                    resp_kanban = st.text_input("Responsable", value=st.session_state.datos_usuario.get('nombre_completo', 'Usuario'))
+                with col_form2:
+                    prio_kanban = st.select_slider("Prioridad", ["Baja", "Media", "Alta"], value="Media")
+                
+                obs_kanban = st.text_area(
+                    "Observaciones iniciales (opcional)", 
+                    placeholder="Agrega comentarios, notas o detalles sobre este informe...",
+                    height=100
+                )
+                
+                if st.form_submit_button("🚀 Iniciar Informe", type="primary", use_container_width=True):
                     if centro_kanban == "No hay coincidencias":
-                        st.error("Por favor selecciona un centro válido")
+                        st.error("❌ Por favor selecciona un centro válido")
+                    elif centro_kanban in centros_con_informe:
+                        st.error(f"❌ El centro '{centro_kanban}' ya tiene un informe registrado. No se permiten duplicados.")
+                        st.info("💡 Usa la opción de búsqueda para encontrar el informe existente en el tablero.")
                     else:
-                        nuevo_id = len(df_seguimiento) + 1
+                        nuevo_id = df_seguimiento['ID'].max() + 1 if not df_seguimiento.empty and 'ID' in df_seguimiento.columns else 1
                         nuevo_item = {
                             "ID": nuevo_id,
                             "Centro": centro_kanban,
@@ -307,9 +369,63 @@ else:
                         }
                         df_seguimiento = pd.concat([df_seguimiento, pd.DataFrame([nuevo_item])], ignore_index=True)
                         utils.guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
-                        st.success(f"Informe para {centro_kanban} agregado al tablero.")
+                        st.success(f"✅ Informe para '{centro_kanban}' agregado al tablero exitosamente.")
+                        time.sleep(1)
                         st.rerun()
 
+        # Sistema de búsqueda y filtrado del Kanban
+        st.divider()
+        with st.expander("🔍 Buscar y Filtrar Informes", expanded=False):
+            col_filtro1, col_filtro2, col_filtro3 = st.columns(3)
+            
+            with col_filtro1:
+                buscar_informe = st.text_input(
+                    "🔎 Buscar por centro o responsable",
+                    placeholder="Escribe para buscar...",
+                    key="buscar_informe_kanban"
+                )
+            
+            with col_filtro2:
+                filtro_estado = st.multiselect(
+                    "📊 Filtrar por estado",
+                    ["Pendiente", "Pausado", "En Proceso", "Terminado"],
+                    default=["Pendiente", "Pausado", "En Proceso", "Terminado"],
+                    key="filtro_estado_kanban"
+                )
+            
+            with col_filtro3:
+                filtro_prioridad = st.multiselect(
+                    "⚡ Filtrar por prioridad",
+                    ["Baja", "Media", "Alta"],
+                    default=["Baja", "Media", "Alta"],
+                    key="filtro_prioridad_kanban"
+                )
+        
+        # Aplicar filtros al DataFrame
+        df_filtrado = df_seguimiento.copy()
+        
+        # Filtro de búsqueda
+        if buscar_informe:
+            buscar_upper = buscar_informe.upper()
+            if 'Centro' in df_filtrado.columns and 'Responsable' in df_filtrado.columns:
+                mask = (df_filtrado['Centro'].fillna('').astype(str).str.upper().str.contains(buscar_upper, na=False) |
+                       df_filtrado['Responsable'].fillna('').astype(str).str.upper().str.contains(buscar_upper, na=False))
+                df_filtrado = df_filtrado[mask]
+        
+        # Filtro de estado
+        if filtro_estado and 'Estado' in df_filtrado.columns:
+            df_filtrado = df_filtrado[df_filtrado['Estado'].isin(filtro_estado)]
+        
+        # Filtro de prioridad
+        if filtro_prioridad and 'Prioridad' in df_filtrado.columns:
+            df_filtrado = df_filtrado[df_filtrado['Prioridad'].isin(filtro_prioridad)]
+        
+        # Mostrar resumen de filtros
+        if buscar_informe or len(filtro_estado) < 4 or len(filtro_prioridad) < 3:
+            st.info(f"📌 Mostrando {len(df_filtrado)} de {len(df_seguimiento)} informes (filtros aplicados)")
+
+        st.divider()
+        
         # Columnas del Kanban
         col_pend, col_pausa, col_proc, col_fin = st.columns(4)
         
@@ -319,11 +435,11 @@ else:
         col_proc.markdown("<h3 style='text-align: center; color: #17a2b8;'>🔵 En Proceso</h3>", unsafe_allow_html=True)
         col_fin.markdown("<h3 style='text-align: center; color: #28a745;'>🟢 Terminado</h3>", unsafe_allow_html=True)
         
-        # Filtrar datos
-        df_pend = df_seguimiento[df_seguimiento['Estado'] == 'Pendiente']
-        df_pausa = df_seguimiento[df_seguimiento['Estado'] == 'Pausado']
-        df_proc = df_seguimiento[df_seguimiento['Estado'] == 'En Proceso']
-        df_fin = df_seguimiento[df_seguimiento['Estado'] == 'Terminado']
+        # Filtrar datos usando df_filtrado
+        df_pend = df_filtrado[df_filtrado['Estado'] == 'Pendiente'] if not df_filtrado.empty and 'Estado' in df_filtrado.columns else pd.DataFrame()
+        df_pausa = df_filtrado[df_filtrado['Estado'] == 'Pausado'] if not df_filtrado.empty and 'Estado' in df_filtrado.columns else pd.DataFrame()
+        df_proc = df_filtrado[df_filtrado['Estado'] == 'En Proceso'] if not df_filtrado.empty and 'Estado' in df_filtrado.columns else pd.DataFrame()
+        df_fin = df_filtrado[df_filtrado['Estado'] == 'Terminado'] if not df_filtrado.empty and 'Estado' in df_filtrado.columns else pd.DataFrame()
         
         # Función para renderizar tarjeta
         def render_card(row, col_obj, current_status):
@@ -422,11 +538,6 @@ else:
         for _, row in df_fin.iterrows():
             render_card(row, col_fin, 'Terminado')
 
-    # --- CALENDARIO: PLANIFICACIÓN DE INFORMES (MÓDULO MEJORADO) ---
-    elif menu == "Calendario":
-        from calendario_module import render_calendario
-        render_calendario(df_centros, df_seguimiento, ARCHIVO_CALENDARIO, usuario=st.session_state.usuario)
-    
     # --- GESTIÓN DE USUARIOS (SOLO ADMIN) ---
     elif menu == "👥 Gestión de Usuarios":
         auth_module.render_gestion_usuarios()

@@ -43,6 +43,7 @@ desktop.ini
 backups/
 *.bak
 *.backup
+.backup_calendario/
 
 # Logs
 *.log
