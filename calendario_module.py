@@ -12,10 +12,28 @@ def obtener_archivo_calendario_usuario(usuario):
 
 def cargar_calendario(archivo_calendario):
     """Loads the calendar data from the CSV file."""
+    # Definir columnas requeridas
+    columnas_requeridas = ['Fecha', 'Hora', 'Centro', 'Codigo', 'Estado', 'Responsable', 'Observaciones']
+    
     if os.path.exists(archivo_calendario):
-        df = pd.read_csv(archivo_calendario)
-        return df
-    return pd.DataFrame()
+        try:
+            df = pd.read_csv(archivo_calendario)
+            # Verificar que tenga al menos las columnas básicas
+            if not df.empty and 'Fecha' in df.columns:
+                return df
+            elif df.empty:
+                # Si el archivo existe pero está vacío, devolver DataFrame con columnas
+                return pd.DataFrame(columns=columnas_requeridas)
+        except pd.errors.EmptyDataError:
+            # Archivo existe pero está completamente vacío (sin headers)
+            return pd.DataFrame(columns=columnas_requeridas)
+        except Exception as e:
+            # Cualquier otro error, devolver DataFrame vacío con estructura correcta
+            print(f"Error al cargar calendario: {e}")
+            return pd.DataFrame(columns=columnas_requeridas)
+    
+    # Si el archivo no existe, devolver DataFrame vacío con estructura correcta
+    return pd.DataFrame(columns=columnas_requeridas)
 
 def guardar_calendario(df_calendario, archivo_calendario):
     """Guarda el DataFrame completo del calendario (reemplaza el archivo)"""
@@ -49,19 +67,29 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario, usuario=No
     
     # Cargar calendario
     df_cal = cargar_calendario(archivo_calendario)
-    if not df_cal.empty:
+    
+    # Validar y procesar el DataFrame del calendario
+    if not df_cal.empty and 'Fecha' in df_cal.columns:
         df_cal['Fecha'] = pd.to_datetime(df_cal['Fecha']).dt.date
         df_cal['ID_Cita'] = df_cal.index if 'ID_Cita' not in df_cal.columns else df_cal['ID_Cita']
+    elif df_cal.empty:
+        # Si está vacío pero tiene la estructura correcta, no hay problema
+        pass
+    else:
+        # Si no tiene la columna Fecha, mostrar error y reinicializar
+        st.error("⚠️ El archivo de calendario está corrupto. Se creará uno nuevo.")
+        df_cal = pd.DataFrame(columns=['Fecha', 'Hora', 'Centro', 'Codigo', 'Estado', 'Responsable', 'Observaciones'])
+        guardar_calendario(df_cal, archivo_calendario)
     
     # --- ESTADÍSTICAS GENERALES ---
     st.subheader("📊 Resumen de Agenda")
     col_stat1, col_stat2, col_stat3, col_stat4, col_stat5 = st.columns(5)
     
     total_citas = len(df_cal)
-    citas_pendientes = len(df_cal[df_cal['Estado'] == 'Pendiente']) if not df_cal.empty else 0
-    citas_confirmadas = len(df_cal[df_cal['Estado'] == 'Confirmada']) if not df_cal.empty else 0
-    citas_completadas = len(df_cal[df_cal['Estado'] == 'Completada']) if not df_cal.empty else 0
-    citas_hoy = len(df_cal[df_cal['Fecha'] == datetime.date.today()]) if not df_cal.empty else 0
+    citas_pendientes = len(df_cal[df_cal['Estado'] == 'Pendiente']) if not df_cal.empty and 'Estado' in df_cal.columns else 0
+    citas_confirmadas = len(df_cal[df_cal['Estado'] == 'Confirmada']) if not df_cal.empty and 'Estado' in df_cal.columns else 0
+    citas_completadas = len(df_cal[df_cal['Estado'] == 'Completada']) if not df_cal.empty and 'Estado' in df_cal.columns else 0
+    citas_hoy = len(df_cal[df_cal['Fecha'] == datetime.date.today()]) if not df_cal.empty and 'Fecha' in df_cal.columns else 0
     
     col_stat1.metric("Total Citas", total_citas)
     col_stat2.metric("⏳ Pendientes", citas_pendientes)
@@ -94,7 +122,7 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario, usuario=No
             
             agenda_dia = {h: None for h in range(8, 17)}
             
-            if not df_cal.empty:
+            if not df_cal.empty and 'Fecha' in df_cal.columns and 'Hora' in df_cal.columns:
                 citas_dia = df_cal[df_cal['Fecha'] == fecha_ver]
                 for _, row in citas_dia.iterrows():
                     h = int(row['Hora'])
@@ -153,7 +181,7 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario, usuario=No
                     dia_nombre = ["Lun", "Mar", "Mié", "Jue", "Vie"][idx]
                     st.markdown(f"**{dia_nombre}** {dia.strftime('%d/%m')}")
                     
-                    if not df_cal.empty:
+                    if not df_cal.empty and 'Fecha' in df_cal.columns and 'Hora' in df_cal.columns:
                         citas_dia = df_cal[df_cal['Fecha'] == dia]
                         if not citas_dia.empty:
                             for _, cita in citas_dia.iterrows():
@@ -237,7 +265,7 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario, usuario=No
         lista_centros_final = sorted(df_filtrado['NOMBRE'].unique().tolist()) if 'NOMBRE' in df_filtrado.columns else []
         
         # Mostrar contador con más información
-        centros_con_citas = set(df_cal['Centro'].unique()) if not df_cal.empty else set()
+        centros_con_citas = set(df_cal['Centro'].unique()) if not df_cal.empty and 'Centro' in df_cal.columns else set()
         centros_con_informes = set(df_seguimiento['Centro'].unique()) if not df_seguimiento.empty else set()
         
         if busqueda_centro or filtro_prov != "Todas" or filtro_cat != "Todas" or filtro_canton != "Todos":
@@ -294,18 +322,19 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario, usuario=No
                     errores.append("Selecciona un centro válido")
                 if fecha_visita.weekday() >= 5:
                     errores.append("No se permiten fines de semana")
-                if not df_cal.empty:
+                if not df_cal.empty and 'Fecha' in df_cal.columns and 'Hora' in df_cal.columns:
                     if not df_cal[(df_cal['Fecha'] == fecha_visita) & (df_cal['Hora'] == hora_int)].empty:
                         errores.append("Horario ocupado")
                     
                     # Verificar si el centro ya tiene citas programadas
-                    citas_centro = df_cal[df_cal['Centro'] == centro_sel]
-                    if not citas_centro.empty:
-                        citas_activas = citas_centro[citas_centro['Estado'].isin(['Pendiente', 'Confirmada'])]
-                        if not citas_activas.empty:
-                            errores.append(f"⚠️ Este centro ya tiene {len(citas_activas)} cita(s) programada(s)")
-                            for _, cita_exist in citas_activas.iterrows():
-                                advertencias.append(f"   📅 {cita_exist['Fecha']} a las {int(cita_exist['Hora']):02d}:00 - Estado: {cita_exist['Estado']}")
+                    if 'Centro' in df_cal.columns and 'Estado' in df_cal.columns:
+                        citas_centro = df_cal[df_cal['Centro'] == centro_sel]
+                        if not citas_centro.empty:
+                            citas_activas = citas_centro[citas_centro['Estado'].isin(['Pendiente', 'Confirmada'])]
+                            if not citas_activas.empty:
+                                errores.append(f"⚠️ Este centro ya tiene {len(citas_activas)} cita(s) programada(s)")
+                                for _, cita_exist in citas_activas.iterrows():
+                                    advertencias.append(f"   📅 {cita_exist['Fecha']} a las {int(cita_exist['Hora']):02d}:00 - Estado: {cita_exist['Estado']}")
                 
                 # Verificar si el centro ya tiene informe en Kanban
                 if not df_seguimiento.empty:
@@ -430,7 +459,7 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario, usuario=No
                         centros_ocupados.update(df_seguimiento[df_seguimiento['Estado'].isin(['Terminado', 'En Proceso', 'Pausado'])]['Centro'].unique())
                     
                     # Excluir centros con citas programadas o confirmadas
-                    if not df_cal.empty:
+                    if not df_cal.empty and 'Estado' in df_cal.columns and 'Centro' in df_cal.columns:
                         centros_con_citas = df_cal[df_cal['Estado'].isin(['Pendiente', 'Confirmada'])]['Centro'].unique()
                         centros_ocupados.update(centros_con_citas)
                     
