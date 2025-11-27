@@ -7,3 +7,14 @@ textColor="#fafafa"
 
 [server]
 headless = true
+
+[client]
+showErrorDetails = false
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
+
+[ui]
+hideTopBar = false
+hideSidebarNav = false
