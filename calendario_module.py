@@ -347,7 +347,7 @@ def render_calendario(df_centros, df_seguimiento, archivo_calendario, usuario=No
                     
                     # Solo crear en Kanban si no existe ya un informe para este centro
                     if crear_kanban and (df_seguimiento.empty or centro_sel not in df_seguimiento['Centro'].values):
-                        from app import guardar_seguimiento
+                        from utils import guardar_seguimiento
                         nuevo_kanban = {
                             "ID": len(df_seguimiento) + 1,
                             "Centro": centro_sel,

@@ -7,6 +7,7 @@ import time
 # Importar módulos personalizados
 import auth_module
 import calendario_module
+import utils
 
 # --- CONFIGURACIÓN DE PÁGINA ---
 st.set_page_config(
@@ -154,9 +155,6 @@ def cargar_seguimiento(archivo_seguimiento):
             df['Observaciones'] = ''
         return df
     return pd.DataFrame(columns=["ID", "Centro", "Estado", "Fecha_Inicio", "Fecha_Fin", "Responsable", "Prioridad", "Observaciones"])
-
-def guardar_seguimiento(df, archivo_seguimiento):
-    df.to_csv(archivo_seguimiento, index=False)
 
 # --- CARGA DE DATOS ---
 df_centros = cargar_datos_maestros(ARCHIVO_DATOS)
@@ -308,7 +306,7 @@ else:
                             "Observaciones": obs_kanban
                         }
                         df_seguimiento = pd.concat([df_seguimiento, pd.DataFrame([nuevo_item])], ignore_index=True)
-                        guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                        utils.guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                         st.success(f"Informe para {centro_kanban} agregado al tablero.")
                         st.rerun()
 
@@ -374,7 +372,7 @@ else:
                         )
                         if st.button("💾 Guardar Comentario", key=f"save_obs_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Observaciones'] = nueva_obs
-                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            utils.guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.success("Comentario actualizado")
                             time.sleep(0.5)
                             st.rerun()
@@ -384,31 +382,31 @@ else:
                     if current_status == 'Pendiente':
                         if c2.button("▶️ Iniciar", key=f"start_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
-                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            utils.guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
                     elif current_status == 'Pausado':
                         if c1.button("▶️ Reanudar", key=f"resume_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
-                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            utils.guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
                         if c2.button("🗑️ Cancelar", key=f"cancel_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pendiente'
-                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            utils.guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
                     elif current_status == 'En Proceso':
                         if c1.button("⏸️ Pausar", key=f"pause_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Pausado'
-                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            utils.guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
                         if c2.button("✅ Terminar", key=f"finish_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'Terminado'
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Fecha_Fin'] = datetime.date.today()
-                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            utils.guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
                     elif current_status == 'Terminado':
                         if c1.button("↩️ Reabrir", key=f"reopen_{row['ID']}", use_container_width=True):
                             df_seguimiento.loc[df_seguimiento['ID'] == row['ID'], 'Estado'] = 'En Proceso'
-                            guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
+                            utils.guardar_seguimiento(df_seguimiento, ARCHIVO_SEGUIMIENTO)
                             st.rerun()
 
         # Renderizar columnas

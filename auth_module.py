@@ -160,8 +160,7 @@ def render_login():
                         st.error("❌ Usuario o contraseña incorrectos")
         
         st.divider()
-        st.caption("💡 Usuario por defecto: admin / admin123")
-
+       
 def render_gestion_usuarios():
     """Renderiza la interfaz de gestión de usuarios (solo para admin)"""
     if st.session_state.datos_usuario.get('rol') != 'admin':
