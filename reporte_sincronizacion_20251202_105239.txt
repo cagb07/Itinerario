@@ -1,0 +1,14 @@
+REPORTE DE SINCRONIZACIÓN DE CENTROS
+================================================================================
+
+Fecha: 2025-12-02 10:52:39
+
+Total de Centros: 513
+En Seguimiento: 486
+Cobertura: 94.7%
+
+Distribución por Estado:
+  Pendiente: 480
+  Terminado: 4
+  Pausado: 1
+  En Proceso: 1

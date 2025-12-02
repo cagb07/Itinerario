@@ -1,0 +1,487 @@
+ID,Centro,Estado,Fecha_Inicio,Fecha_Fin,Responsable,Prioridad,Observaciones
+1,MAURO FERNÁNDEZ ACUÑA,Terminado,2025-11-24,2025-11-24,Cristian Granados,Media,
+2,LA GUARIA,Terminado,2025-11-24,2025-11-24,Cristian Granados ,Media,
+3,BAJO BURGOS,Terminado,2025-11-24,2025-11-24,Cristian Granados,Media,
+4,EL SUR,Pausado,2025-11-24,,Cristian Granados,Media,se envia correo ya que en meraki tiene problemas de equipo fantasma
+5,LA JOYA,Terminado,2025-11-24,2025-11-24,Cristian Granados,Media,en este CE se presentan problemas con enlace ice se adjuntan fotografia de caso en SIGA 
+6,J.N. DANTE ALIGHIERI,En Proceso,2025-11-25,,Sistema,Media,
+7,LAGUNAS,Pendiente,2025-11-25,,Sistema,Media,
+8,MONSERRAT,Pendiente,2025-11-25,,Sistema,Media,
+9,CARLOS LUIS VALVERDE VEGA,Pendiente,2025-11-25,,Sistema,Media,
+10,CARRIZAL,Pendiente,2025-11-25,,Sistema,Media,
+11,EL PEJE,Pendiente,2025-11-25,,Sistema,Media,
+12,FLORENCIA DE MATAZANOS,Pendiente,2025-11-25,,Sistema,Media,
+13,ABROJO GUAYMÍ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+14,AGUA AZUL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+15,AGUA CALIENTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+16,ALBA OCAMPO ALVARADO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+17,ALBERTO MANUEL BRENES MORA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+18,ALBERTO PANIAGUA CHAVARRÍA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+19,ALICE MOYA RODRÍGUEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+20,ALTO DEL MONTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+21,AMÉRICA CENTRAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+22,ANA MARÍA GUARDIA MORA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+23,ANITA GRANDE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+24,APOLINAR LOBO UMAÑA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+25,ARTURO SOLANO MONGE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+26,ARTURO TORRES MARTÍNEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+27,ASENTAMIENTO NUEVO ARENAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+28,AZUL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+29,BAJAMAR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+30,BAJO DEL VIRILLA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+31,BAJO MATAMOROS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+32,BAJO SAN ANTONIO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+33,BALVANERO VARGAS MOLINA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+34,BARRIO LA CRUZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+35,BARRIO LOS ÁNGELES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+36,BARROETA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+37,BELLO HORIZONTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+38,BENITO JUÁREZ GARCÍA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+39,BETANIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+40,BONILLA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+41,BRASIL DE SANTA ANA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+42,BRUS MALIS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+43,BUENA VISTA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+44,BUENOS AIRES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+45,BUENOS AIRES SUR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+46,C.T.P. ABELARDO BONILLA BALDARES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+47,C.T.P. AMBIENTALISTA ISAÍAS RETANA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+48,C.T.P. BRAULIO ODIO HERRERA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+49,C.T.P. DE ABANGARES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+50,C.T.P. DE BATAÁN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+51,C.T.P. DE BOLÍVAR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+52,C.T.P. DE CAÑAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+53,C.T.P. DE COPAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+54,C.T.P. DE CORREDORES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+55,C.T.P. DE FLORES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+56,C.T.P. DE JACÓ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+57,C.T.P. DE LIVERPOOL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+58,C.T.P. DE PACAYAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+59,C.T.P. DE PITAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+60,C.T.P. DE SAN RAFAEL DE ALAJUELA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+61,C.T.P. DE ULLOA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+62,C.T.P. DEL ESTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+63,C.T.P. DOS CERCAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+64,C.T.P. FERNANDO VOLIO JIMÉNEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+65,C.T.P. GRANADILLA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+66,C.T.P. HENRI FRANÇOIS PITTIER,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+67,C.T.P. JOSÉ FIGUERES FERRER,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+68,C.T.P. MERCEDES NORTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+69,C.T.P. MÁXIMO QUESADA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+70,C.T.P. OREAMUNO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+71,C.T.P. OROSI,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+72,C.T.P. PAVAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+73,C.T.P. PURRAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+74,C.T.P. ROSARIO DE NARANJO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+75,C.T.P. SAN ISIDRO DE HEREDIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+76,C.T.P. SAN PABLO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+77,C.T.P. SAN RAFAEL DE POÁS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+78,C.T.P. TRONADORA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+79,C.T.P. VALLE LA ESTRELLA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+80,C.T.P. VÁZQUEZ DE CORONADO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+81,CACIQUE NICOA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+82,CALDERA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+83,CALIFORNIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+84,CALLE LILES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+85,CALLE QUIRÓS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+86,CALLE UNO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+87,CAMPO KENNEDY,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+88,CARBÓN #1,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+89,CAROLINA RODRÍGUEZ DE MIRAMBELL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+90,CARTAGENA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+91,CAÑUELA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+92,CEDROS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+93,CENIZO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+94,CENTRAL COTO 47,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+95,CENTRAL DE GUAPILES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+96,CHAGUITE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+97,CHAMBACU,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+98,CHASE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+99,CHIRCÓ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+100,CHITARÍA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+101,CIUDADELA DE PAVAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+102,COCORÍ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+103,COLEGIO ALEJANDRO QUESADA R.,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+104,COLEGIO AMBIENTALISTA EL ROBLE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+105,COLEGIO CANDELARIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+106,COLEGIO DE GUÁCIMO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+107,COLEGIO DE JIMÉNEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+108,COLEGIO DR. CLODOMIRO PICADO TWIGHT,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+109,COLEGIO DR. RICARDO MORENO CAÑAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+110,COLEGIO FELIPE PÉREZ PÉREZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+111,COLEGIO FRANCISCA CARRASCO JIMÉNEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+112,COLEGIO GREGORIO JOSÉ RAMÍREZ CASTRO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+113,COLEGIO INDÍGENA YIMBA CAJC,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+114,COLEGIO MATA DE PLÁTANO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+115,COLEGIO REDENTORISTA SAN ALFONSO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+116,COLEGIO RINCÓN GRANDE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+117,COLEGIO RODRIGO HERNÁNDEZ VARGAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+118,COLEGIO SAN FRANCISCO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+119,COLEGIO SAN LUIS GONZAGA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+120,COLEGIO TUETAL NORTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+121,COLONIA BOLAÑOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+122,COLONIA ISIDREÑA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+123,COLONIA NARANJEÑA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+124,CONCEPCIÓN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+125,COSTA RICA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+126,COTO 44,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+127,COTO 49,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+128,COTO 50-51,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+129,CRISTO REY,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+130,CRISTÓBAL COLÓN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+131,CTP COMERCIAL Y SERVICIOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+132,CUATRO MILLAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+133,DAMAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+134,DARIZARA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+135,DOCTOR FERRAZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+136,DOMINGO FAUSTINO SARMIENTO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+137,DOS CERCAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+138,DR. RAFAEL CALDERÓN MUÑOZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+139,EIDA VARGAS CARRANZA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+140,EL ARBOLITO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+141,EL BOSQUE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+142,EL CACHITO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+143,EL CARMEN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+144,EL CARMEN LA SUIZA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+145,EL CAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+146,EL EDÉN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+147,EL HOYÓN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+148,EL LLANO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+149,EL MILANO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+150,EL PROGRESO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+151,EL ROBLE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+152,EL SALVADOR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+153,EL SITIO DE LAS ABRAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+154,EL SÁNDALO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+155,EMILIO ROBERT BROUCA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+156,ENRIQUE PINTO FERNÁNDEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+157,ERMIDA BLANCO GONZÁLEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+158,ESCUELA DE DOMINGO FAUTINO SARMIENTO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+159,ESCUELA EL SILENCIO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+160,ESCUELA EL VERGEL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+161,ESCUELA JACINTO PANIAGUA RODRIGUEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+162,ESCUELA SAN ANTONIO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+163,ESMERALDA OREAMUNO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+164,ESPAÑA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+165,EXPERIMENTAL BILINGUE DE BELÉN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+166,EXPERIMENTAL BILINGUE DE LA CRUZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+167,EXPERIMENTAL BILINGUE DE PALMARES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+168,EXPERIMENTAL BILINGÜE DE AGUA BUENA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+169,EXPERIMENTAL BILINGÜE DE GRECIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+170,EXPERIMENTAL BILINGÜE DE NARANJO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+171,EXPERIMENTAL BILINGÜE DE NUEVO ARENAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+172,EXPERIMENTAL BILINGÜE DE SAN RAMÓN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+173,EXPERIMENTAL BILINGÜE LA TRINIDAD,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+174,Escuela Alberto Echandi Montero,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+175,FERNANDO TERÁN VALLS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+176,FIDEL CHAVES MURILLO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+177,FILADELFIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+178,FINCA MARITIMA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+179,FINCA SAN JUAN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+180,FÁTIMA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+181,GABRIELA MISTRAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+182,GENERAL MANUEL BELGRANO GONZÁLEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+183,GENERAL TOMÁS GUARDIA GUTIÉRREZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+184,GUACHIPELÍN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+185,GUAPINOL NORTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+186,GUSTAVO AGÜERO BARRANTES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+187,GUÁCIMO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+188,HERNÁN RODRÍGUEZ RUÍZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+189,I.D.A. SAN LUIS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+190,I.E.G.B. ANDRÉS BELLO LÓPEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+191,I.E.G.B. MARÍA VARGAS RODRÍGUEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+192,I.M.A.S.,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+193,INSTITUTO DE ALAJUELA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+194,INSTITUTO DE GUANACASTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+195,INVU LA GUARIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+196,INVU LAS CAÑAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+197,J.N. ASCENSIÓN ESQUIVEL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+198,J.N. CRISTO REY,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+199,J.N. ESMERALDA OREAMUNO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+200,J.N. FEDERICO SALAS CARVAJAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+201,J.N. ISMAEL COTO FERNANDEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+202,J.N. JOSÉ RAFAEL ARAYA ROJAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+203,J.N. JUAN MORA FERNÁNDEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+204,J.N. JUSTO A. FACIO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+205,J.N. MARÍA JIMÉNEZ UREÑA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+206,J.N. PEDRO AGUIRRE CERDA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+207,J.N. REPÚBLICA DE PARAGUAY,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+208,J.N. RICARDO JIMÉNEZ OREAMUNO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+209,JESÚS ARGÜELLO VILLALOBOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+210,JESÚS JIMÉNEZ ZAMORA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+211,JOAQUÍN ARROYO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+212,JOAQUÍN CAMACHO ULATE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+213,JOAQUÍN LORENZO SANCHO QUESADA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+214,JORGE VOLIO JIMÉNEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+215,JOSE MARIA CALDERON,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+216,JOSÉ ANA MARÍN CUBERO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+217,JOSÉ BREINDERHOFF,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+218,JOSÉ EZEQUIEL GONZÁLEZ VINDAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+219,JOSÉ FIGUERES FERRER,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+220,JOSÉ MARÍA CAÑAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+221,JOSÉ RAFAEL ARAYA ROJAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+222,JOSÉ ÁNGEL PADILLA SOLÍS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+223,JOSÉ ÁNGEL VIETO RANGEL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+224,JUAN CHAVES ROJAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+225,JUAN FLORES UMAÑA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+226,JUAN JOSÉ VALVERDE MADRIGAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+227,JUAN RAFAEL MEOÑO HIDALGO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+228,JUAN RAFAEL MORA PORRAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+229,JUAN ÁLVAREZ AZOFEIFA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+230,JULIA FERNÁNDEZ RODRÍGUEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+231,JULIÁN VOLIO LLORENTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+232,JUSTO ANTONIO FACIO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+233,LA BALSA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+234,LA CEIBA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+235,LA COOPERATIVA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+236,LA CUEVA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+237,LA ESPERANZA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+238,LA GLORIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+239,LA HERMOSA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+240,LA INMACULADA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+241,LA LINDA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+242,LA MINA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+243,LA MONA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+244,LA MONTAÑITA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+245,LA PALMA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+246,LA PEREGRINA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+247,LA PRADERA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+248,LA RIVIERA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+249,LA TRINIDAD,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+250,LA TROCHA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+251,LA UNIÓN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+252,LA UNIÓN DEL SUR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+253,LABORATORIO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+254,LAGUNILLAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+255,LAS BRISAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+256,LAS BRISAS DE ZENT,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+257,LAS LETRAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+258,LAS LOMAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+259,LAS MERCEDES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+260,LAS NUBES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+261,LAS PALMAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+262,LAS PARCELAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+263,LAS VIRTUDES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+264,LEÓN XIII,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+265,LICEO AEROPUERTO JERUSALÉN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+266,LICEO ANASTASIO ALFARO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+267,LICEO ANTONIO OBANDO CHAN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+268,LICEO BRAULIO CARRILLO COLINA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+269,LICEO CARRILLOS DE POÁS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+270,LICEO CIUDAD NEILY,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+271,LICEO CONCEPCIÓN DANIEL FLORES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+272,LICEO DE ALFARO RUIZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+273,LICEO DE CALLE FALLAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+274,LICEO DE CARIARI,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+275,LICEO DE CHACARITA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+276,LICEO DE CORONADO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+277,LICEO DE COT,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+278,LICEO DE CURRIDABAT,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+279,LICEO DE ESCAZU,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+280,LICEO DE FLORENCIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+281,LICEO DE FRAILES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+282,LICEO DE GUARARÍ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+283,LICEO DE MAGALLANES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+284,LICEO DE MIRAMAR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+285,LICEO DE POÁS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+286,LICEO DE PURISCAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+287,LICEO DE SANTA BÁRBARA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+288,LICEO DE SANTA GERTRUDIS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+289,LICEO DE TARRAZÚ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+290,LICEO DE TURRÚCARES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+291,LICEO DEL SUR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+292,LICEO DIURNO CIUDAD COLÓN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+293,LICEO EDGAR CERVANTES VILLALTA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+294,LICEO EMILIANO ODIO MADRIGAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+295,LICEO ENRIQUE GUIER SAENZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+296,LICEO FERNANDO VOLIO JIMÉNEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+297,LICEO FRANCISCO AMIGUETTE HERRERA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+298,LICEO GASTÓN PERALTA CARRANZA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+299,LICEO HERNÁN VARGAS RAMÍREZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+300,LICEO HERNÁN ZAMORA ELIZONDO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+301,LICEO ING. CARLOS PASCUA ZÚÑIGA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+302,LICEO ING. MANUEL BENAVIDES RODRÍGUEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+303,LICEO ING. SAMUEL SAÉNZ FLORES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+304,LICEO JOAQUÍN GUTIÉRREZ MANGEL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+305,LICEO LA ALEGRÍA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+306,LICEO LABORATORIO EMMA GAMBOA UCR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+307,LICEO LEÓN CORTÉS CASTRO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+308,LICEO LOS ÁNGELES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+309,LICEO LUIS DOBLES SEGREDA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+310,LICEO MARIO BOURNE BOURNE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+311,LICEO MARIO VINDAS SALAZAR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+312,LICEO MIGUEL ARAYA VENEGAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+313,LICEO NUESTRA SEÑORA DE LOS ÁNGELES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+314,LICEO NUEVO DE PURISICAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+315,LICEO PAVAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+316,LICEO PICAGRES DE MORA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+317,LICEO REGIONAL DE FLORES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+318,LICEO RICARDO FERNÁNDEZ GUARDIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+319,LICEO RURAL CAÑON DE EL GUARCO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+320,LICEO RURAL CERROS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+321,LICEO RURAL EL JARDÍN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+322,LICEO RURAL LAS NUBES CRISTO REY,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+323,LICEO RURAL LOS ÁNGELES DE PÁRAMO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+324,LICEO RURAL SANTA ROSA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+325,LICEO RURAL VILLA HERMOSA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+326,LICEO SAN DIEGO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+327,LICEO SAN GABRIEL DE ASERRÍ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+328,LICEO SAN JOSE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+329,LICEO SAN NICOLÁS DE TOLENTINO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+330,LICEO SAN RAFAEL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+331,LICEO SANTA ANA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+332,LICEO SANTA RITA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+333,LICEO SANTA TERESITA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+334,LICEO SOTERO GONZALEZ BARQUERO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+335,LICEO VILLARREAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+336,LICEO  POASITO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+337,LIMONAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+338,LIVERPOOL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+339,LLANO BONITO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+340,LOMAS DEL RÍO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+341,LOS ALPES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+342,LOS ANDES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+343,LOS CARTAGOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+344,LOS CHILES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+345,LOS CORALES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+346,LOS DIAMANTES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+347,LOS LLANOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+348,LOS PATIOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+349,LOS PINOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+350,LOS SITIOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+351,LOS TORNOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+352,LOS ÁNGELES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+353,LOURDES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+354,LUIS DEMETRIO TINOCO CASTRO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+355,LUIS FELIPE GONZÁLEZ FLORES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+356,LÍDER COMTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+357,MAL PAÍS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+358,MANUEL CAMACHO HERNÁNDEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+359,MANUEL DEL PILAR ZUMBADO GONZÁLEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+360,MANUEL HIDALGO MORA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+361,MANUEL MARÍA GUTIÉRREZ ZAMORA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+362,MANZANILLO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+363,MAQUENCAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+364,MARGARITA ROJAS ZÚÑIGA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+365,MARIO SALAZAR MORA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+366,MARÍA HIDALGO HIDALGO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+367,MATA DE CAÑA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+368,MATAMBUGUITO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+369,MIGUEL CARBALLO CORRALES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+370,MIGUEL RODRÍGUEZ VILLARREAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+371,MIXTA PEDREGOSO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+372,MIXTA SAN CRISTÓBAL SUR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+373,MOJONCITO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+374,MOLLEJONES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+375,MONSEÑOR ANSELMO LLORENTE Y LA FUENTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+376,MONSEÑOR MORERA VEGA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+377,MONTERREY VARGAS ARAYA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+378,NEFTALÍ VILLALOBOS GUTIÉRREZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+379,NINFA CABEZAS GONZÁLEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+380,NOCTURNO DE QUEPOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+381,NOMBRE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+382,NUEVA GENERACIÓN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+383,OMAR DENGO GUERRERO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+384,ONCE DE ABRIL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+385,OTTO HUBBE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+386,PACTO DEL JOCOTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+387,PACÍFICA FERNÁNDEZ OREAMUNO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+388,PALENQUE TONJIBE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+389,PALESTINA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+390,PARISMINA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+391,PATIO DE AGUA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+392,PEDRO MARÍA BADILLA BOLAÑOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+393,PEDRO PÉREZ ZELEDÓN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+394,PIEDRAS AZULES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+395,PILAR JIMÉNEZ SOLIS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+396,PLATANARES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+397,PLAYÓN SUR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+398,PORFIRIO BRENES CASTRO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+399,PORTEGOLPE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+400,POZO DE AGUA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+401,PRAGA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+402,PUEBLO NUEVO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+403,PUERTO CARRILLO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+404,PUERTO ESCONDIDO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+405,PUERTO JESÚS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+406,PUERTO RICO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+407,PÍO XII,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+408,QUIABDO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+409,RAFAEL ARGUEDAS HERRERA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+410,RAFAEL YGLESIAS CASTRO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+411,RAMADAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+412,RAMÓN BEDOYA MONGE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+413,REPÚBLICA DE COLOMBIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+414,REPÚBLICA DE VENEZUELA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+415,RESCATE DE UJARRÁS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+416,RINCÓN DE HERRERA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+417,RINCÓN DE OROZCO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+418,RINCÓN GRANDE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+419,ROBERTO CANTILLANO VINDAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+420,RODEITO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+421,RODOLFO PETERS SCHEIDER,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+422,ROGELIO FERNÁNDEZ GÜELL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+423,ROGELIO SOTELA BONILLA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+424,RONCADOR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+425,ROSARIO SALAZAR MARÍN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+426,RÍO BONITO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+427,RÍO GRANDE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+428,RÍO SALTO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+429,RÍO SAN CARLOS SECTOR ESTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+430,SABANA LARGA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+431,SABANILLA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+432,SAGRADA FAMILIA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+433,SALUSTIO CAMACHO MUÑOZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+434,SALVADOR VILLAR MUÑOZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+435,SAMARA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+436,SAN ANTONIO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+437,SAN BOSCO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+438,SAN CAYETANO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+439,SAN CLEMENTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+440,SAN DIEGO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+441,SAN DIMAS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+442,SAN FELIPE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+443,SAN FRANCISCO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+444,SAN ISIDRO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+445,SAN JERÓNIMO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+446,SAN JOAQUÍN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+447,SAN JOSÉ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+448,SAN JOSÉ NORTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+449,SAN JUAN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+450,SAN JUAN CHIQUITO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+451,SAN LUIS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+452,SAN LUIS GONZAGA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+453,SAN MARCOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+454,SAN MARTÍN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+455,SAN MIGUEL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+456,SAN PABLO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+457,SAN PEDRO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+458,SAN RAFAEL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+459,SAN RAMÓN,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+460,SAN VICENTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+461,SANDIAL,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+462,SANTA CRUZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+463,SANTA EDUVIGES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+464,SANTA LUCÍA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+465,SANTA MARÍA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+466,SANTA ROSA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+467,SANTA TERESA NORTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+468,SANTIAGO ALPÍZAR JIMÉNEZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+469,SANTO TOMÁS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+470,SANTÍSIMA TRINIDAD,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+471,SARCHÍ NORTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+472,SAUREZ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+473,SECTOR NORTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+474,SIMÓN BOLÍVAR PALACIOS,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+475,SINAÍ,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+476,SONZAPOTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+477,SOR MARÍA ROMERO MENESES,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+478,SUERRE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+479,TAJO ALTO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+480,TIERRA PROMETIDA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+481,TRONADORA,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+482,URBANO OVIEDO ALFARO,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+483,VERBENA NORTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+484,VERBENA SUR,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+485,WINSTON CHURCHILL SPENCER,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
+486,ZAPOTE,Pendiente,2025-12-02,,Sistema,Media,Centro agregado automáticamente el 2025-12-02 10:52
