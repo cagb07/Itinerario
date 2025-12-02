@@ -148,8 +148,44 @@ def cargar_seguimiento():
     return pd.DataFrame(columns=["ID", "Centro", "Estado", "Fecha_Inicio", "Fecha_Fin", "Responsable", "Prioridad", "Observaciones"])
 
 def guardar_seguimiento(df):
-    """Guarda el estado de los informes."""
-    df.to_csv(ARCHIVO_SEGUIMIENTO, index=False)
+    """Guarda el estado de los informes con verificación robusta."""
+    try:
+        # Asegurar que la columna Observaciones existe
+        if 'Observaciones' not in df.columns:
+            df['Observaciones'] = ''
+        
+        # Crear backup antes de guardar
+        if os.path.exists(ARCHIVO_SEGUIMIENTO):
+            import shutil
+            backup_name = f"{ARCHIVO_SEGUIMIENTO}.backup"
+            shutil.copy(ARCHIVO_SEGUIMIENTO, backup_name)
+        
+        # Guardar con encoding UTF-8
+        df.to_csv(ARCHIVO_SEGUIMIENTO, index=False, encoding='utf-8')
+        
+        # Verificar que se guardó correctamente
+        if os.path.exists(ARCHIVO_SEGUIMIENTO):
+            df_verify = pd.read_csv(ARCHIVO_SEGUIMIENTO)
+            if len(df_verify) == len(df):
+                # Eliminar backup si todo salió bien
+                if os.path.exists(f"{ARCHIVO_SEGUIMIENTO}.backup"):
+                    os.remove(f"{ARCHIVO_SEGUIMIENTO}.backup")
+                return True
+            else:
+                st.error("⚠️ Error: El archivo guardado no coincide con los datos")
+                # Restaurar backup
+                if os.path.exists(f"{ARCHIVO_SEGUIMIENTO}.backup"):
+                    shutil.copy(f"{ARCHIVO_SEGUIMIENTO}.backup", ARCHIVO_SEGUIMIENTO)
+                return False
+        return False
+    except Exception as e:
+        st.error(f"❌ Error crítico al guardar seguimiento: {e}")
+        # Restaurar backup si existe
+        if os.path.exists(f"{ARCHIVO_SEGUIMIENTO}.backup"):
+            import shutil
+            shutil.copy(f"{ARCHIVO_SEGUIMIENTO}.backup", ARCHIVO_SEGUIMIENTO)
+            st.warning("⚠️ Se restauró el backup anterior")
+        return False
 
 def cargar_calendario():
     """Carga el calendario de citas. Maneja errores de formato."""
@@ -180,6 +216,29 @@ def guardar_registro(ruta, datos):
 # --- CARGA DE DATOS ---
 df_centros = cargar_datos_maestros()
 df_seguimiento = cargar_seguimiento()
+
+# --- SISTEMA DE AUTO-GUARDADO Y VERIFICACIÓN ---
+# Inicializar session_state para persistencia
+if 'ultima_verificacion' not in st.session_state:
+    st.session_state.ultima_verificacion = datetime.datetime.now()
+    st.session_state.contador_cambios = 0
+
+# Verificar integridad de datos cada vez que se carga la app
+if not df_seguimiento.empty:
+    # Asegurar que todas las columnas necesarias existen
+    columnas_requeridas = ["ID", "Centro", "Estado", "Fecha_Inicio", "Fecha_Fin", "Responsable", "Prioridad", "Observaciones"]
+    for col in columnas_requeridas:
+        if col not in df_seguimiento.columns:
+            df_seguimiento[col] = '' if col == 'Observaciones' else None
+            st.warning(f"⚠️ Columna '{col}' agregada al seguimiento")
+            guardar_seguimiento(df_seguimiento)
+
+# Mostrar indicador de última actualización en sidebar
+if not df_seguimiento.empty:
+    tiempo_desde_actualizacion = datetime.datetime.now() - st.session_state.ultima_verificacion
+    if tiempo_desde_actualizacion.total_seconds() < 60:
+        st.sidebar.success(f"✅ Datos verificados hace {int(tiempo_desde_actualizacion.total_seconds())}s")
+
 
 # --- INTERFAZ ---
 
