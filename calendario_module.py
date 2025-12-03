@@ -4,25 +4,31 @@ import datetime
 import os
 import time
 
-def render_calendario(df_centros, df_seguimiento, ARCHIVO_CALENDARIO):
+# --- DATA FUNCTIONS ---
+
+def cargar_calendario(archivo_calendario):
+    """Loads the calendar data from the CSV file."""
+    if os.path.exists(archivo_calendario):
+        return pd.read_csv(archivo_calendario)
+    return pd.DataFrame()
+
+def guardar_registro(ruta, datos):
+    """Saves a new record to the specified CSV file."""
+    df_new = pd.DataFrame([datos])
+    if not os.path.exists(ruta):
+        df_new.to_csv(ruta, index=False)
+    else:
+        df_new.to_csv(ruta, mode='a', header=False, index=False)
+
+# --- MAIN RENDER FUNCTION ---
+
+def render_calendario(df_centros, df_seguimiento, archivo_calendario):
     """Módulo completo del sistema de calendario mejorado"""
-    
-    def cargar_calendario():
-        if os.path.exists(ARCHIVO_CALENDARIO):
-            return pd.read_csv(ARCHIVO_CALENDARIO)
-        return pd.DataFrame()
-    
-    def guardar_registro(ruta, datos):
-        df_new = pd.DataFrame([datos])
-        if not os.path.exists(ruta):
-            df_new.to_csv(ruta, index=False)
-        else:
-            df_new.to_csv(ruta, mode='a', header=False, index=False)
     
     st.title("📅 Sistema de Planificación de Informes")
     
     # Cargar calendario
-    df_cal = cargar_calendario()
+    df_cal = cargar_calendario(archivo_calendario)
     if not df_cal.empty:
         df_cal['Fecha'] = pd.to_datetime(df_cal['Fecha']).dt.date
         df_cal['ID_Cita'] = df_cal.index if 'ID_Cita' not in df_cal.columns else df_cal['ID_Cita']
@@ -266,7 +272,7 @@ def render_calendario(df_centros, df_seguimiento, ARCHIVO_CALENDARIO):
                         "Fecha_Creacion": datetime.date.today()
                     }
                     
-                    guardar_registro(ARCHIVO_CALENDARIO, nueva_cita)
+                    guardar_registro(archivo_calendario, nueva_cita)
                     
                     if crear_kanban:
                         from app import guardar_seguimiento
@@ -309,14 +315,14 @@ def render_calendario(df_centros, df_seguimiento, ARCHIVO_CALENDARIO):
                         
                         if st.button("💾 Guardar", key=f"save_{idx}"):
                             df_cal.loc[idx, 'Estado'] = nuevo_estado
-                            df_cal.to_csv(ARCHIVO_CALENDARIO, index=False)
+                            df_cal.to_csv(archivo_calendario, index=False)
                             st.success("✅ Actualizado")
                             time.sleep(0.5)
                             st.rerun()
                         
                         if st.button("🗑️ Eliminar", key=f"del_{idx}"):
                             df_cal = df_cal.drop(idx)
-                            df_cal.to_csv(ARCHIVO_CALENDARIO, index=False)
+                            df_cal.to_csv(archivo_calendario, index=False)
                             st.success("🗑️ Eliminada")
                             time.sleep(0.5)
                             st.rerun()
@@ -398,10 +404,10 @@ def render_calendario(df_centros, df_seguimiento, ARCHIVO_CALENDARIO):
                         
                         if nuevas:
                             df_nuevas = pd.DataFrame(nuevas)
-                            if not os.path.exists(ARCHIVO_CALENDARIO):
-                                df_nuevas.to_csv(ARCHIVO_CALENDARIO, index=False)
+                            if not os.path.exists(archivo_calendario):
+                                df_nuevas.to_csv(archivo_calendario, index=False)
                             else:
-                                df_nuevas.to_csv(ARCHIVO_CALENDARIO, mode='a', header=False, index=False)
+                                df_nuevas.to_csv(archivo_calendario, mode='a', header=False, index=False)
                             
                             st.success(f"✅ {len(nuevas)} citas generadas")
                             st.dataframe(df_nuevas[['Fecha', 'Hora', 'Centro', 'Provincia']].head(10))
